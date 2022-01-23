@@ -21,6 +21,19 @@ class GameBoard:
                 [None for _ in range(8)] if rectangle > 0 else [None]
                 for rectangle in range(rectangles_num + 1)]
 
+    @abstractmethod
+    def get_mills_containing_pawn(self, pawn_position: Tuple[int]):
+        pass
+
+    def __eq__(self: GameBoard, __o: GameBoard) -> bool:
+        conditions = [type(self).__name__ == type(__o).__name__,
+                      self.board == __o.board]
+        return False not in conditions
+
+    @abstractmethod
+    def __str__(self):
+        pass
+
     def validate_pawn_position(self, pawn_position):
         rect, position = pawn_position
         if not (0 <= position <= 7):
@@ -101,28 +114,3 @@ class GameBoard:
                           (2, position),
                           (3, position)))
         return mills
-
-    @abstractmethod
-    def get_mills_containing_pawn(self, pawn_position: Tuple[int]):
-        pass
-
-    def __eq__(self: GameBoard, __o: GameBoard) -> bool:
-        conditions = [type(self).__name__ == type(__o).__name__,
-                      self.board == __o.board]
-        return False not in conditions
-
-    @abstractmethod
-    def __str__(self):
-        pass
-
-
-
-
-
-
-
-
-
-
-
-
