@@ -1,4 +1,7 @@
-from game_board import NinePawnBoard, SixPawnBoard, TwelvePawnBoard
+from game_boards.three_pawn_board import ThreePawnBoard
+from game_boards.six_pawn_board import SixPawnBoard
+from game_boards.nine_pawn_board import NinePawnBoard
+from game_boards.twelve_pawn_board import TwelvePawnBoard
 from player import Player
 
 
