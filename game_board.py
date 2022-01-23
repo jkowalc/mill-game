@@ -81,15 +81,25 @@ class GameBoard:
                               (rect, third_pos)))
         return mills
 
-    def check_diff_rect_mills(self, pawn_position: Tuple[int]):
+    def check_simple_diff_rect_mills(self, pawn_position: Tuple[int]):
         rect, position = pawn_position
         mills = []
-        if position in {1, 3, 5, 7} or self.allow_diagonal_movement:
+        if position in {1, 3, 5, 7}:
             if (self.board[1][position] == self.board[2][position] and
                     self.board[2][position] == self.board[3][position]):
                 mills.append(((1, position),
                               (2, position),
                               (3, position)))
+        return mills
+
+    def check_all_diff_rect_mills(self, pawn_position: Tuple[int]):
+        rect, position = pawn_position
+        mills = []
+        if (self.board[1][position] == self.board[2][position] and
+                self.board[2][position] == self.board[3][position]):
+            mills.append(((1, position),
+                          (2, position),
+                          (3, position)))
         return mills
 
     @abstractmethod
@@ -116,8 +126,8 @@ class ThreePawnBoard(GameBoard):
         if self.board[rect][position] is None:
             return None
         mills = []
-        mills.append(self.check_center_mills(pawn_position))
-        mills.append(self.check_same_rect_mills(pawn_position))
+        mills.extend(self.check_center_mills(pawn_position))
+        mills.extend(self.check_same_rect_mills(pawn_position))
         return mills
 
 
@@ -131,7 +141,7 @@ class SixPawnBoard(GameBoard):
         if self.board[rect][position] is None:
             return None
         mills = []
-        mills.append(self.check_same_rect_mills(pawn_position))
+        mills.extend(self.check_same_rect_mills(pawn_position))
         return mills
 
 
@@ -145,8 +155,8 @@ class NinePawnBoard(GameBoard):
         if self.board[rect][position] is None:
             return None
         mills = []
-        mills.append(self.check_same_rect_mills(pawn_position))
-        mills.append(self.check_diff_rect_mills(pawn_position))
+        mills.extend(self.check_same_rect_mills(pawn_position))
+        mills.extend(self.check_simple_diff_rect_mills(pawn_position))
         return mills
 
 
@@ -160,6 +170,6 @@ class TwelvePawnBoard(GameBoard):
         if self.board[rect][position] is None:
             return None
         mills = []
-        mills.append(self.check_same_rect_mills(pawn_position))
-        mills.append(self.check_diff_rect_mills(pawn_position))
+        mills.extend(self.check_same_rect_mills(pawn_position))
+        mills.extend(self.check_all_diff_rect_mills(pawn_position))
         return mills
