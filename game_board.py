@@ -124,7 +124,7 @@ class ThreePawnBoard(GameBoard):
         self.validate_pawn_position(pawn_position)
         rect, position = pawn_position
         if self.board[rect][position] is None:
-            return None
+            return []
         mills = []
         mills.extend(self.check_center_mills(pawn_position))
         mills.extend(self.check_same_rect_mills(pawn_position))
@@ -139,7 +139,7 @@ class SixPawnBoard(GameBoard):
         self.validate_pawn_position(pawn_position)
         rect, position = pawn_position
         if self.board[rect][position] is None:
-            return None
+            return []
         mills = []
         mills.extend(self.check_same_rect_mills(pawn_position))
         return mills
@@ -153,7 +153,7 @@ class NinePawnBoard(GameBoard):
         self.validate_pawn_position(pawn_position)
         rect, position = pawn_position
         if self.board[rect][position] is None:
-            return None
+            return []
         mills = []
         mills.extend(self.check_same_rect_mills(pawn_position))
         mills.extend(self.check_simple_diff_rect_mills(pawn_position))
@@ -168,7 +168,7 @@ class TwelvePawnBoard(GameBoard):
         self.validate_pawn_position(pawn_position)
         rect, position = pawn_position
         if self.board[rect][position] is None:
-            return None
+            return []
         mills = []
         mills.extend(self.check_same_rect_mills(pawn_position))
         mills.extend(self.check_all_diff_rect_mills(pawn_position))
