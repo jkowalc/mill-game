@@ -4,7 +4,7 @@ from exceptions import WrongPawnNumberError
 
 
 class Player:
-    def __init__(self, name, symbol, pawns_num, pawns_on_board=None):
+    def __init__(self, name, symbol, pawns_num=9, pawns_on_board=None):
         self.name = name
         self.symbol = symbol
         if pawns_num not in {3, 6, 9, 12}:
