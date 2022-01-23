@@ -1,6 +1,6 @@
 from __future__ import annotations
+from abc import abstractmethod
 from typing import List, Tuple
-
 from exceptions import InvalidInitialBoardError, InvalidPawnPositionError
 
 
@@ -36,6 +36,11 @@ class GameBoard:
                 msg = f"Pawn rectangle must be between 1 and {rect_num}"
                 raise InvalidPawnPositionError(msg)
 
+    def get_pawn_value(self, pawn_position):
+        self.validate_pawn_position(pawn_position)
+        rect, position = pawn_position
+        return self.board[rect][position]
+
     def validate_initial_board(self, initial_board):
         if not len(initial_board) == self.rectangles_num + 1:
             msg = "Number of rectangles in board must be the same as declared"
@@ -48,56 +53,113 @@ class GameBoard:
                 msg = "Rectangles bigger than zero must contain 8 positions"
                 raise InvalidInitialBoardError(msg)
 
-    def check_if_pawn_in_mill(self, pawn_position: Tuple[int]):
+    def check_center_mills(self, pawn_position: Tuple[int]):
+        rect, position = pawn_position
+        mills = []
+        if rect == 1:
+            if (self.board[1][position] == self.board[0][0] and
+                    self.board[0][0] == self.board[1][position+4]):
+                mills.append(((1, position), (0, 0), (1, position+4)))
+        else:
+            for pos in range(8):
+                if (self.board[1][pos] == self.board[0][0] and
+                        self.board[0][0] == self.board[1][pos+4]):
+                    mills.append(((1, pos), (0, 0), (1, pos+4)))
+        return mills
+
+    def check_same_rect_mills(self, pawn_position: Tuple[int]):
+        rect, position = pawn_position
+        mills = []
+        for first_pos in [0, 2, 4, 6]:
+            second_pos = first_pos+1
+            third_pos = (first_pos+2) % 8
+            if (position in {first_pos, second_pos, third_pos} and
+                    self.board[rect][first_pos] == self.board[rect][second_pos] and
+                    self.board[rect][second_pos] == self.board[rect][third_pos]):
+                mills.append(((rect, first_pos),
+                              (rect, second_pos),
+                              (rect, third_pos)))
+        return mills
+
+    def check_diff_rect_mills(self, pawn_position: Tuple[int]):
+        rect, position = pawn_position
+        mills = []
+        if position in {1, 3, 5, 7} or self.allow_diagonal_movement:
+            if (self.board[1][position] == self.board[2][position] and
+                    self.board[2][position] == self.board[3][position]):
+                mills.append(((1, position),
+                              (2, position),
+                              (3, position)))
+        return mills
+
+    @abstractmethod
+    def get_mills_containing_pawn(self, pawn_position: Tuple[int]):
+        pass
+
+    def __eq__(self: GameBoard, __o: GameBoard) -> bool:
+        conditions = [type(self).__name__ == type(__o).__name__,
+                      self.board == __o.board]
+        return False not in conditions
+
+    @abstractmethod
+    def __str__(self):
+        pass
+
+
+class ThreePawnBoard(GameBoard):
+    def __init__(self, initial_board):
+        super().__init__(1, True, True, initial_board)
+
+    def get_mills_containing_pawn(self, pawn_position: Tuple[int]):
         self.validate_pawn_position(pawn_position)
         rect, position = pawn_position
         if self.board[rect][position] is None:
             return None
+        mills = []
+        mills.append(self.check_center_mills(pawn_position))
+        mills.append(self.check_same_rect_mills(pawn_position))
+        return mills
 
-        # 3 pawns special case
-        if self.allow_center_position:
-            if rect == 1:
-                first_value = self.board[1][position]
-                second_value = self.board[0][0]
-                third_value = self.board[1][position+4]
-                if first_value == second_value == third_value:
-                    return [(1, position), (0, 0), (1, position+4)]
-            else:
-                for pos in range(8):
-                    first_value = self.board[1][pos]
-                    second_value = self.board[0][0]
-                    third_value = self.board[1][pos+4]
-                    if first_value == second_value == third_value:
-                        return [(1, pos), (0, 0), (1, pos+4)]
 
-        # In the same rectangle (check sides)
-        for first_pos in [0, 2, 4, 6]:
-            first_value = self.board[rect][first_pos]
-            second_value = self.board[rect][first_pos+1]
-            third_pos = (first_pos+2) % 8
-            third_value = self.board[rect][third_pos]
-            if (position in {first_pos, first_pos+1, third_pos} and
-                    first_value == second_value == third_value):
-                return [(rect, first_pos),
-                        (rect, first_pos+1),
-                        (rect, third_pos)]
+class SixPawnBoard(GameBoard):
+    def __init__(self, initial_board):
+        super().__init__(2, False, False, initial_board)
 
-        # In a different rectangle (check diagonals and other mills)
-        first_rect = 1
-        if self.rectangles_num == 3:
-            if position in {1, 3, 5, 7} or self.allow_diagonal_movement:
-                first_value = self.board[first_rect][position]
-                second_value = self.board[first_rect+1][position]
-                third_value = self.board[first_rect+2][position]
-                if first_value == second_value == third_value:
-                    return [(first_rect, position),
-                            (first_rect+1, position),
-                            (first_rect+2, position)]
-        return None
+    def get_mills_containing_pawn(self, pawn_position: Tuple[int]):
+        self.validate_pawn_position(pawn_position)
+        rect, position = pawn_position
+        if self.board[rect][position] is None:
+            return None
+        mills = []
+        mills.append(self.check_same_rect_mills(pawn_position))
+        return mills
 
-    def __eq__(self: GameBoard, __o: GameBoard) -> bool:
-        conditions = [self.rectangles_num == __o.rectangles_num,
-                      self.allow_center_position == __o.allow_center_position,
-                      self.allow_diagonal_movement == __o.allow_diagonal_movement,
-                      self.board == __o.board]
-        return False not in conditions
+
+class NinePawnBoard(GameBoard):
+    def __init__(self, initial_board):
+        super().__init__(3, False, False, initial_board)
+
+    def get_mills_containing_pawn(self, pawn_position: Tuple[int]):
+        self.validate_pawn_position(pawn_position)
+        rect, position = pawn_position
+        if self.board[rect][position] is None:
+            return None
+        mills = []
+        mills.append(self.check_same_rect_mills(pawn_position))
+        mills.append(self.check_diff_rect_mills(pawn_position))
+        return mills
+
+
+class TwelvePawnBoard(GameBoard):
+    def __init__(self, initial_board):
+        super().__init__(3, True, False, initial_board)
+
+    def get_mills_containing_pawn(self, pawn_position: Tuple[int]):
+        self.validate_pawn_position(pawn_position)
+        rect, position = pawn_position
+        if self.board[rect][position] is None:
+            return None
+        mills = []
+        mills.append(self.check_same_rect_mills(pawn_position))
+        mills.append(self.check_diff_rect_mills(pawn_position))
+        return mills
