@@ -1,7 +1,7 @@
 from __future__ import annotations
 from typing import List, Tuple
 
-from exceptions import InvalidPawnPositionError
+from exceptions import InvalidInitialBoardError, InvalidPawnPositionError
 
 
 class GameBoard:
@@ -9,11 +9,12 @@ class GameBoard:
                  rectangles_num,
                  allow_diagonal_movement: bool,
                  allow_center_position: bool,
-                 initial_board: List[List]):
+                 initial_board: List[List] = None):
         self.rectangles_num = rectangles_num
         self.allow_diagonal_movement = allow_diagonal_movement
         self.allow_center_position = allow_center_position
         if initial_board:
+            self.validate_initial_board(initial_board)
             self.board = initial_board
         else:
             self.board = [
@@ -23,17 +24,32 @@ class GameBoard:
     def validate_pawn_position(self, pawn_position):
         rect, position = pawn_position
         if not (0 <= position <= 7):
-            return False
-        if not (1 <= rect <= self.rectangles_num):
-            if rect == 0 and self.allow_center_position:
-                return True
-            else:
-                return False
-        return True
+            msg = "Pawn position must between 0 and 7"
+            raise InvalidPawnPositionError(msg)
+        rect_num = self.rectangles_num
+        if self.allow_center_position:
+            if not (0 <= rect <= rect_num):
+                msg = f"Pawn rectangle must be between 0 and {rect_num}"
+                raise InvalidPawnPositionError(msg)
+        else:
+            if not (1 <= rect <= rect_num):
+                msg = f"Pawn rectangle must be between 1 and {rect_num}"
+                raise InvalidPawnPositionError(msg)
+
+    def validate_initial_board(self, initial_board):
+        if not len(initial_board) == self.rectangles_num + 1:
+            msg = "Number of rectangles in board must be the same as declared"
+            raise InvalidInitialBoardError(msg)
+        for i, rect in enumerate(initial_board):
+            if i == 0 and len(rect) != 1:
+                msg = "Rectangle zero must contain one position"
+                raise InvalidInitialBoardError(msg)
+            elif i > 0 and len(rect) != 8:
+                msg = "Rectangles bigger than zero must contain 8 positions"
+                raise InvalidInitialBoardError(msg)
 
     def check_if_pawn_in_mill(self, pawn_position: Tuple[int]):
-        if not self.validate_pawn_position(pawn_position):
-            raise InvalidPawnPositionError
+        self.validate_pawn_position(pawn_position)
         rect, position = pawn_position
         if self.board[rect][position] is None:
             return None
