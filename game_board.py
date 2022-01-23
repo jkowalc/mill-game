@@ -89,9 +89,9 @@ class GameBoard:
                 first_value = self.board[first_rect][position]
                 second_value = self.board[first_rect+1][position]
                 third_value = self.board[first_rect+2][position]
-                if first_rect == second_value == third_value:
+                if first_value == second_value == third_value:
                     return [(first_rect, position),
-                            (first_rect+1, position)
+                            (first_rect+1, position),
                             (first_rect+2, position)]
         return None
 

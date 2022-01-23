@@ -1,4 +1,3 @@
-from mimetypes import init
 from game_board import GameBoard
 from player import Player
 
@@ -44,6 +43,7 @@ def test_check_if_pawn_in_mill_sides_6_pawns():
     assert game_board.check_if_pawn_in_mill((2, 6)) == [(2, 4), (2, 5), (2, 6)]
 
     assert game_board.check_if_pawn_in_mill((1, 1)) is None
+
 
 def test_check_if_pawn_in_mill_diagonals_12_pawns():
     playerA = Player("Jan Kowalski")
