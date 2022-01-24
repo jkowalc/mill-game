@@ -1,3 +1,10 @@
+from tokenize import Name
+from turtle import position
+from pawn_position_mapper import get_alphabet_from_position_tuple, get_position_tuple_from_alphabet
+
+from player import Player
+
+
 def get_game_variant() -> int:
     print("\nPossible variants:\n1. Three men's morris\n2. Six men's morris\n3. Nine men's morris\n4. Twelve men's morris")
     inp = input("Choose one: ")
@@ -21,3 +28,43 @@ def get_game_mode() -> str:
 def get_player_name(letter="") -> str:
     inp = input(f"\nEnter player{letter}'s name: ")
     return inp
+
+
+def get_player_move(moves: dict, player: Player, board):
+    possible_sources = moves.keys()
+    source = get_source(possible_sources, player, board)
+    possible_destinations = moves[source]
+    dest = get_destination(possible_destinations, player, board)
+    return (source, dest)
+
+
+def get_source(positions, player, board):
+    for i, pawn in enumerate(positions):
+        positions[i] = get_alphabet_from_position_tuple(pawn)
+    positions_list = "Possible pawns: ["
+    for pos in positions:
+        positions_list += f"{pos}, "
+    positions_list = positions_list[:-1]
+    positions_list += "]"
+    print(positions_list)
+    inp = input(f"{player.name} choose pawn to move: ")
+    if inp not in positions:
+        return get_source(positions, player)
+    else:
+        return get_position_tuple_from_alphabet(inp, board)
+
+
+def get_destination(positions, player, board):
+    for i, pawn in enumerate(positions):
+        positions[i] = get_alphabet_from_position_tuple(pawn)
+    positions_list = "Possible destinations: ["
+    for pos in positions:
+        positions_list += f"{pos}, "
+    positions_list = positions_list[:-1]
+    positions_list += "]"
+    print(positions_list)
+    inp = input(f"{player.name} choose destination: ")
+    if inp not in positions:
+        return get_source(positions, player)
+    else:
+        return get_position_tuple_from_alphabet(inp, board)
