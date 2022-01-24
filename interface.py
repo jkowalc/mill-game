@@ -85,6 +85,16 @@ def print_move(player, move, board):
     print(f"\n{player.name} moved from {source_alphabet} to {dest_alphabet}")
 
 
+def print_take_out(player, pawn_position, board):
+    pawn_alphabet = get_alphabet_from_position_tuple(pawn_position, board)
+    print(f"{player.name}'s {pawn_alphabet} pawn has been taken out")
+
+
+def print_take_in(player, pawn_position, board):
+    pawn_alphabet = get_alphabet_from_position_tuple(pawn_position, board)
+    print(f"{player.name} placed his pawn on {pawn_alphabet}")
+
+
 def print_winner(player):
     print(f"\nPlayer {player.name} won! ")
 

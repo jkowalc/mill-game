@@ -1,6 +1,5 @@
 from __future__ import annotations
 from abc import abstractmethod
-from re import S
 from typing import List, Tuple
 from game_boards.game_board_check_mills import (check_all_diff_rect_mills,
                                                 check_center_mills,
