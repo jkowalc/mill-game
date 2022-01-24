@@ -1,10 +1,13 @@
-from pawn_position_mapper import get_alphabet_from_position_tuple, get_position_tuple_from_alphabet
-
-from player import Player
+from pawn_position_mapper import (get_alphabet_from_position_tuple,
+                                  get_position_tuple_from_alphabet)
 
 
 def get_game_variant() -> int:
-    print("\nPossible variants:\n1. Three men's morris\n2. Six men's morris\n3. Nine men's morris\n4. Twelve men's morris")
+    print("""\nPossible variants:
+    1. Three men's morris
+    2. Six men's morris
+    3. Nine men's morris
+    4. Twelve men's morris""")
     inp = input("Choose one: ")
     if inp not in {"1", "2", "3", "4"}:
         print("Wrong value")
@@ -14,7 +17,10 @@ def get_game_variant() -> int:
 
 
 def get_game_mode() -> str:
-    print("\nPossible game modes:\n1. Player vs Player\n2. Player vs Computer\n3. Player vs Smart Computer")
+    print("""\nPossible game modes:
+    1. Player vs Player
+    2. Player vs Computer
+    3. Player vs Smart Computer""")
     inp = input("Choose one: ")
     if inp not in {"1", "2", "3"}:
         print("Wrong value")
@@ -31,7 +37,7 @@ def get_player_name(letter="", previous_name=None) -> str:
     return inp
 
 
-def get_player_move(moves: dict, player: Player, board):
+def get_player_move(moves: dict, player, board):
     possible_sources = moves.keys()
     source = get_source(possible_sources, player, board)
     possible_destinations = moves[source]
@@ -87,7 +93,7 @@ def get_pawn_to_take(positions, player, board):
         return get_position_tuple_from_alphabet(inp, board)
 
 
-def print_move(player: Player, move, board):
+def print_move(player, move, board):
     source, dest = move
     source_alphabet = get_alphabet_from_position_tuple(source, board)
     dest_alphabet = get_alphabet_from_position_tuple(dest, board)

@@ -1,5 +1,6 @@
 from game import Game
-from interface import get_game_mode, get_game_variant, get_player_name, print_first_player
+from interface import (get_game_mode, get_game_variant,
+                       get_player_name, print_first_player)
 from player import ComputerPlayer, Player, SmartComputerPlayer
 import random
 

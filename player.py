@@ -1,6 +1,5 @@
 from __future__ import annotations
 from exceptions import WrongPawnNumberError
-from game_boards.game_board import GameBoard
 import interface
 
 

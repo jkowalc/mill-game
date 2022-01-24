@@ -1,7 +1,8 @@
 from typing import Tuple
 from game_boards.game_board import GameBoard
-from player import Player
-import pawn_position_mapper
+from pawn_position_mapper import (get_position_tuple_from_alphabet,
+                                  get_conversion_dict_from_rectangles_num)
+
 
 class NinePawnBoard(GameBoard):
     def __init__(self, initial_board=None):
@@ -36,10 +37,10 @@ class NinePawnBoard(GameBoard):
 
     def __str__(self):
         board_str = "A B C D E F G\n"
-        conv_dict = pawn_position_mapper.get_conversion_dict_from_rectangles_num(2)
+        conv_dict = get_conversion_dict_from_rectangles_num(2)
         positions = {}
         for key in conv_dict.keys():
-            rect, pos = pawn_position_mapper.get_position_tuple_from_alphabet(key)
+            rect, pos = get_position_tuple_from_alphabet(key, self.board)
             if self.board[rect][pos] is None:
                 positions[key] = " "
             else:

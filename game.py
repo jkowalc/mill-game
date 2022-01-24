@@ -1,12 +1,11 @@
-from turtle import pos
 from exceptions import WrongPawnNumberError
-from game_boards.game_board import GameBoard
 from game_boards.nine_pawn_board import NinePawnBoard
 from game_boards.six_pawn_board import SixPawnBoard
 from game_boards.three_pawn_board import ThreePawnBoard
 from game_boards.twelve_pawn_board import TwelvePawnBoard
-from player import ComputerPlayer, Player
+from player import Player
 import interface
+
 
 class Game:
     def __init__(self, playerA: Player, playerB: Player, pawns_num):
@@ -92,5 +91,6 @@ class Game:
             self.execute_turn_second_phase(player)
         else:
             self.execute_turn_first_phase(player)
-        if not (self.check_winning_conditions() or self.check_tie_conditions()):
+        if not (self.check_winning_conditions() or
+                self.check_tie_conditions()):
             self.execute_turn(self.get_other_player(player))

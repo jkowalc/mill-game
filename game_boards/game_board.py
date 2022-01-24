@@ -1,9 +1,11 @@
 from __future__ import annotations
 from abc import abstractmethod
 from typing import List, Tuple
-import game_boards.game_board_validation
-import game_boards.game_board_check_mills
-from player import Player
+from game_boards.game_board_check_mills import (check_all_diff_rect_mills,
+                                                check_center_mills,
+                                                check_simple_diff_rect_mills,
+                                                check_same_rect_mills)
+from game_boards import game_board_validation
 
 
 class GameBoard:
@@ -66,19 +68,21 @@ class GameBoard:
         pass
 
     def validate_pawn_position(self, pawn_position):
-        game_boards.game_board_validation.validate_pawn_position(self, pawn_position)
+        game_board_validation.validate_pawn_position(
+            self, pawn_position)
 
     def validate_initial_board(self, initial_board):
-        game_boards.game_board_validation.validate_initial_board(self, initial_board)
+        game_board_validation.validate_initial_board(
+            self, initial_board)
 
     def check_center_mills(self, pawn_position: Tuple[int]):
-        return game_boards.game_board_check_mills.check_center_mills(self, pawn_position)
+        return check_center_mills(self, pawn_position)
 
     def check_same_rect_mills(self, pawn_position: Tuple[int]):
-        return game_boards.game_board_check_mills.check_same_rect_mills(self, pawn_position)
+        return check_same_rect_mills(self, pawn_position)
 
     def check_simple_diff_rect_mills(self, pawn_position: Tuple[int]):
-        return game_boards.game_board_check_mills.check_simple_diff_rect_mills(self, pawn_position)
+        return check_simple_diff_rect_mills(self, pawn_position)
 
     def check_all_diff_rect_mills(self, pawn_position: Tuple[int]):
-        return game_boards.game_board_check_mills.check_all_diff_rect_mills(self, pawn_position)
+        return check_all_diff_rect_mills(self, pawn_position)
