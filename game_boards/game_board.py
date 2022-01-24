@@ -33,6 +33,9 @@ class GameBoard:
 
         return False not in conditions
 
+    def get_all_empty_pawn_positions(self):
+        pass
+
     @abstractmethod
     def check_if_pawn_in_mill(self, pawn_position: Tuple[int]):
         pass

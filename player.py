@@ -1,17 +1,17 @@
 from __future__ import annotations
 from exceptions import WrongPawnNumberError
+from game_boards.game_board import GameBoard
 import interface
 
 
 class Player:
-    def __init__(self, name, symbol, board, pawns_num=9, pawns_on_board=None):
+    def __init__(self, name, symbol, pawns_num=9, pawns_on_board=None):
         self.name = name
         self.symbol = symbol
         if pawns_num not in {3, 6, 9, 12}:
             raise WrongPawnNumberError
         self.pawns_num = pawns_num
         self.pawns_on_board = pawns_on_board
-        self.board = board
 
     def can_jump(self) -> bool:
         return self.pawns_num == 3
@@ -19,8 +19,23 @@ class Player:
     def has_placed_all_pawns(self) -> bool:
         return len(self.pawns_on_board) == self.pawns_num
 
+    def get_possible_pawns_to_take(self):
+        possible_pawns = []
+        for pawn in self.pawns_on_board:
+            if self.board.check_if_pawn_in_mill(pawn):
+                possible_pawns.append(pawn)
+        return possible_pawns
+
+    def execute_move(self, move):
+        source, dest = move
+        self.pawns_on_board.remove(source)
+        self.pawns_on_board.append(dest)
+
     def select_move(self, moves: dict):
         return interface.get_player_move(moves, self, self.board)
+
+    def select_destination(self, possible_destinations):
+        return interface.get_destination(possible_destinations, self, self.board)
 
     def __eq__(self, __o: object) -> bool:
         if isinstance(__o, Player):
@@ -40,7 +55,13 @@ class ComputerPlayer(Player):
     def select_move(self, moves: dict):
         pass
 
+    def select_destination(self, possible_destinations):
+        return super().select_destination(possible_destinations)
+
 
 class SmartComputerPlayer(ComputerPlayer):
     def select_move(self, moves: dict):
         pass
+
+    def select_destination(self, possible_destinations):
+        return super().select_destination(possible_destinations)
