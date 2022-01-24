@@ -52,10 +52,12 @@ class Player:
         return interface.get_player_move(moves, self, self.board)
 
     def select_destination(self, possible_destinations):
-        return interface.get_destination(possible_destinations, self, self.board)
+        return interface.get_destination(possible_destinations, self,
+                                         self.board)
 
     def select_pawn_to_take(self, possible_pawns, other_player):
-        return interface.get_pawn_to_take(possible_pawns, other_player, self.board)
+        return interface.get_pawn_to_take(possible_pawns, other_player,
+                                          self.board)
 
     def __eq__(self, __o: object) -> bool:
         if isinstance(__o, Player):

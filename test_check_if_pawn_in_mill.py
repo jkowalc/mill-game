@@ -1,4 +1,3 @@
-from game_boards.three_pawn_board import ThreePawnBoard
 from game_boards.six_pawn_board import SixPawnBoard
 from game_boards.nine_pawn_board import NinePawnBoard
 from game_boards.twelve_pawn_board import TwelvePawnBoard
@@ -9,8 +8,10 @@ def test_check_if_pawn_in_mill_sides():
     playerA = Player("Jan Kowalski", "A")
     playerB = Player("Agnieszka Nowak", "B")
     initial_board = [[None],
-                     [None, playerB, playerA, playerA, playerA, None, None, None],
-                     [None, None, None, None, playerB, playerB, playerB, None],
+                     [None, playerB, playerA, playerA,
+                      playerA, None, None, None],
+                     [None, None, None, None,
+                      playerB, playerB, playerB, None],
                      [None, None, None, None, None, None, None, None]]
     game_board = NinePawnBoard(initial_board)
 
@@ -31,7 +32,8 @@ def test_check_if_pawn_in_mill_sides_6_pawns():
     playerA = Player("Jan Kowalski", "A")
     playerB = Player("Agnieszka Nowak", "B")
     initial_board = [[None],
-                     [None, playerB, playerA, playerA, playerA, None, None, None],
+                     [None, playerB, playerA, playerA,
+                      playerA, None, None, None],
                      [None, None, None, None, playerB, playerB, playerB, None]]
     game_board = SixPawnBoard(initial_board)
 

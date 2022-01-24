@@ -1,4 +1,3 @@
-from turtle import position
 from typing import Tuple
 from game_boards.game_board import GameBoard
 from pawn_position_mapper import (get_position_tuple_from_alphabet,
@@ -22,7 +21,7 @@ class ThreePawnBoard(GameBoard):
         return False
 
     def get_possible_moves_for_pawn(self, pawn_position):
-        rect, pos = pawn_position # (1, 1)
+        rect, pos = pawn_position
         if rect == 0:
             return self.get_all_empty_pawn_positions()
         else:
@@ -48,8 +47,8 @@ class ThreePawnBoard(GameBoard):
             else:
                 positions[key] = str(self.board[rect][pos])
         board_str += f"1   {positions['a1']}---{positions['b1']}---{positions['c1']}\n"
-        board_str += "    | \ | / |\n"
+        board_str += "    | \\ | / |\n"
         board_str += f"2   {positions['a2']}---{positions['b2']}---{positions['c2']}\n"
-        board_str += "    | / | \ |\n"
+        board_str += "    | / | \\ |\n"
         board_str += f"3   {positions['a3']}---{positions['b3']}---{positions['c3']}\n"
         return board_str
