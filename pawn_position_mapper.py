@@ -9,7 +9,7 @@ def get_position_tuple_from_alphabet(pos: str, board: GameBoard) -> Tuple[int]:
 
 def get_alphabet_from_position_tuple(pos: Tuple[int], board: GameBoard) -> str:
     conv_dict = get_conversion_dict_from_rectangles_num(board.rectangles_num)
-    for alphabet, tuple in conv_dict:
+    for alphabet, tuple in conv_dict.items():
         if tuple == pos:
             return alphabet
     return None

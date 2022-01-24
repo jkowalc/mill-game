@@ -39,12 +39,14 @@ class ThreePawnBoard(GameBoard):
         conv_dict = get_conversion_dict_from_rectangles_num(1)
         positions = {}
         for key in conv_dict.keys():
-            rect, pos = get_position_tuple_from_alphabet(key, self.board)
+            rect, pos = get_position_tuple_from_alphabet(key, self)
             if self.board[rect][pos] is None:
                 positions[key] = " "
             else:
                 positions[key] = str(self.board[rect][pos])
-        board_str += f"1 {positions['a1']} - {positions['b1']} - {positions['c1']}"
-        board_str += f"2 {positions['a2']} - {positions['b2']} - {positions['c2']}"
-        board_str += f"3 {positions['a3']} - {positions['b3']} - {positions['c3']}"
+        board_str += f"1  {positions['a1']}----{positions['b1']}----{positions['c1']}"
+        board_str +=  "   |----|----|"
+        board_str += f"2  {positions['a2']}----{positions['b2']}----{positions['c2']}"
+        board_str +=  "   |----|----|"
+        board_str += f"3  {positions['a3']}----{positions['b3']}----{positions['c3']}"
         return board_str

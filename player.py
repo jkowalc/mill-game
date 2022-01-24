@@ -10,7 +10,10 @@ class Player:
         if pawns_num not in {3, 6, 9, 12}:
             raise WrongPawnNumberError
         self.pawns_num = pawns_num
-        self.pawns_on_board = pawns_on_board
+        if pawns_on_board:
+            self.pawns_on_board = pawns_on_board
+        else:
+            self.pawns_on_board = []
 
     def can_jump(self) -> bool:
         return self.pawns_num == 3

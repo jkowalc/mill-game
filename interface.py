@@ -47,7 +47,7 @@ def get_player_move(moves: dict, player, board):
 
 def get_source(positions, player, board):
     for i, pawn in enumerate(positions):
-        positions[i] = get_alphabet_from_position_tuple(pawn)
+        positions[i] = get_alphabet_from_position_tuple(pawn, board)
     positions_list = "Possible pawns: ["
     for pos in positions:
         positions_list += f"{pos}, "
@@ -56,30 +56,25 @@ def get_source(positions, player, board):
     print(positions_list)
     inp = input(f"{player.name} choose pawn to move: ")
     if inp not in positions:
-        return get_source(positions, player)
+        return get_source(positions, player, board)
     else:
         return get_position_tuple_from_alphabet(inp, board)
 
 
 def get_destination(positions, player, board):
     for i, pawn in enumerate(positions):
-        positions[i] = get_alphabet_from_position_tuple(pawn)
-    positions_list = "Possible destinations: ["
-    for pos in positions:
-        positions_list += f"{pos}, "
-    positions_list = positions_list[:-1]
-    positions_list += "]"
-    print(positions_list)
+        positions[i] = get_alphabet_from_position_tuple(pawn, board)
+    print(positions)
     inp = input(f"{player.name} choose destination: ")
     if inp not in positions:
-        return get_source(positions, player)
+        return get_source(positions, player, board)
     else:
         return get_position_tuple_from_alphabet(inp, board)
 
 
 def get_pawn_to_take(positions, player, board):
     for i, pawn in enumerate(positions):
-        positions[i] = get_alphabet_from_position_tuple(pawn)
+        positions[i] = get_alphabet_from_position_tuple(pawn, board)
     positions_list = "Possible pawns: ["
     for pos in positions:
         positions_list += f"{pos}, "
@@ -88,7 +83,7 @@ def get_pawn_to_take(positions, player, board):
     print(positions_list)
     inp = input(f"Choose one of {player.name}'s pawns to take out: ")
     if inp not in positions:
-        return get_source(positions, player)
+        return get_source(positions, player, board)
     else:
         return get_position_tuple_from_alphabet(inp, board)
 

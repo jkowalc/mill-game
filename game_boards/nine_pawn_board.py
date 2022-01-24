@@ -40,7 +40,7 @@ class NinePawnBoard(GameBoard):
         conv_dict = get_conversion_dict_from_rectangles_num(2)
         positions = {}
         for key in conv_dict.keys():
-            rect, pos = get_position_tuple_from_alphabet(key, self.board)
+            rect, pos = get_position_tuple_from_alphabet(key, self)
             if self.board[rect][pos] is None:
                 positions[key] = " "
             else:
