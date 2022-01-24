@@ -3,6 +3,7 @@ from abc import abstractmethod
 from typing import List, Tuple
 import game_boards.game_board_validation
 import game_boards.game_board_check_mills
+from player import Player
 
 
 class GameBoard:
@@ -27,6 +28,16 @@ class GameBoard:
         rect, position = pawn_position
         return self.board[rect][position]
 
+    def place_pawn(self, pawn_position, player):
+        self.validate_pawn_position(pawn_position)
+        rect, pos = pawn_position
+        self.board[rect][pos] = player
+
+    def take_out_pawn(self, pawn_position):
+        self.validate_pawn_position(pawn_position)
+        rect, pos = pawn_position
+        self.board[rect][pos] = None
+
     def __eq__(self: GameBoard, __o: GameBoard) -> bool:
         conditions = [type(self).__name__ == type(__o).__name__,
                       self.board == __o.board]
@@ -34,7 +45,13 @@ class GameBoard:
         return False not in conditions
 
     def get_all_empty_pawn_positions(self):
-        pass
+        empty_pawn_positions = []
+        for rect, rect_list in enumerate(self.board):
+            for pos, pos_value in enumerate(rect_list):
+                if pos_value is None:
+                    if rect == 0 and self.allow_center_position or rect > 0:
+                        empty_pawn_positions.append((rect, pos))
+        return empty_pawn_positions
 
     @abstractmethod
     def check_if_pawn_in_mill(self, pawn_position: Tuple[int]):
@@ -42,6 +59,10 @@ class GameBoard:
 
     @abstractmethod
     def __str__(self):
+        pass
+
+    @abstractmethod
+    def get_possible_moves_for_pawn(self, pawn_position):
         pass
 
     def validate_pawn_position(self, pawn_position):

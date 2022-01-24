@@ -52,7 +52,8 @@ class Game:
         interface.print_tie()
 
     def check_tie_conditions(self):
-        pass
+        conditions = []
+        return False not in conditions
 
     def get_other_player(self, player):
         if player == self.playerA:
@@ -60,25 +61,33 @@ class Game:
         elif player == self.playerB:
             return self.playerA
 
-    def execute_turn_first_phase(self, player):
+    def take_out_pawn(self, other_player: Player):
+        pawns_to_take = other_player.get_possible_pawns_to_take()
+        selected = other_player.select_pawn_to_take(pawns_to_take)
+        self.board.take_out_pawn(selected)
+        other_player.execute_move((selected, None))
+        other_player.pawns_num -= 1
+
+    def execute_turn_first_phase(self, player: Player):
         possible_destinations = self.board.get_all_empty_pawn_positions()
         selected = player.select_destination(possible_destinations)
         self.board.place_pawn(selected, player)
         player.execute_move((None, selected))
         dest = selected
         if self.board.check_if_pawn_in_mill(dest):
-            pass  # remove one opponent's pawn
+            self.take_out_pawn(self.get_other_player(player))
 
-    def execute_turn_second_phase(self, player):
-        moves = self.board.get_possible_moves_for_player(player)
+    def execute_turn_second_phase(self, player: Player):
+        moves = player.get_possible_moves()
         selected = player.select_move(moves)
         self.board.execute_move(selected)
         player.execute_move(selected)
         dest = selected[1]
         if self.board.check_if_pawn_in_mill(dest):
-            pass  # remove one opponent's pawn
+            self.take_out_pawn(self.get_other_player(player))
 
     def execute_turn(self, player: Player):
+        print(self.board)
         if player.has_placed_all_pawns():
             self.execute_turn_second_phase(player)
         else:
