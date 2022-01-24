@@ -22,23 +22,24 @@ class GameBoard:
                 [None for _ in range(8)] if rectangle > 0 else [None]
                 for rectangle in range(rectangles_num + 1)]
 
-    @abstractmethod
-    def check_if_pawn_in_mill(self, pawn_position: Tuple[int]):
-        pass
-
-    def __eq__(self: GameBoard, __o: GameBoard) -> bool:
-        conditions = [type(self).__name__ == type(__o).__name__,
-                      self.board == __o.board]
-        return False not in conditions
-
-    @abstractmethod
-    def __str__(self):
-        pass
-
     def get_pawn_value(self, pawn_position):
         self.validate_pawn_position(pawn_position)
         rect, position = pawn_position
         return self.board[rect][position]
+
+    def __eq__(self: GameBoard, __o: GameBoard) -> bool:
+        conditions = [type(self).__name__ == type(__o).__name__,
+                      self.board == __o.board]
+
+        return False not in conditions
+
+    @abstractmethod
+    def check_if_pawn_in_mill(self, pawn_position: Tuple[int]):
+        pass
+
+    @abstractmethod
+    def __str__(self):
+        pass
 
     def validate_pawn_position(self, pawn_position):
         game_boards.game_board_validation.validate_pawn_position(self, pawn_position)

@@ -1,16 +1,17 @@
 from __future__ import annotations
-
 from exceptions import WrongPawnNumberError
+import interface
 
 
 class Player:
-    def __init__(self, name, symbol, pawns_num=9, pawns_on_board=None):
+    def __init__(self, name, symbol, board, pawns_num=9, pawns_on_board=None):
         self.name = name
         self.symbol = symbol
         if pawns_num not in {3, 6, 9, 12}:
             raise WrongPawnNumberError
         self.pawns_num = pawns_num
         self.pawns_on_board = pawns_on_board
+        self.board = board
 
     def can_jump(self) -> bool:
         return self.pawns_num == 3
@@ -19,7 +20,7 @@ class Player:
         return len(self.pawns_on_board) == self.pawns_num
 
     def select_move(self, moves: dict):
-        pass
+        return interface.get_player_move(moves, self, self.board)
 
     def __eq__(self, __o: object) -> bool:
         if isinstance(__o, Player):
