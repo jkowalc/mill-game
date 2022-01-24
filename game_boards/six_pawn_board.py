@@ -7,14 +7,12 @@ class SixPawnBoard(GameBoard):
     def __init__(self, initial_board=None):
         super().__init__(2, False, False, initial_board)
 
-    def get_mills_containing_pawn(self, pawn_position: Tuple[int]):
+    def check_if_pawn_in_mill(self, pawn_position: Tuple[int]):
         self.validate_pawn_position(pawn_position)
         rect, position = pawn_position
         if self.board[rect][position] is None:
-            return []
-        mills = []
-        mills.extend(self.check_same_rect_mills(pawn_position))
-        return mills
+            return False
+        return self.check_same_rect_mills(pawn_position)
 
     def get_possible_moves_for_pawn_specific(self, pawn_position, player: Player):
         rect, pos = pawn_position

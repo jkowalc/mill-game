@@ -1,10 +1,8 @@
 from __future__ import annotations
 from abc import abstractmethod
-from mimetypes import init
 from typing import List, Tuple
-from exceptions import InvalidInitialBoardError, InvalidPawnPositionError
-import game_board_validation
-import game_board_check_mills
+import game_boards.game_board_validation
+import game_boards.game_board_check_mills
 
 
 class GameBoard:
@@ -25,7 +23,7 @@ class GameBoard:
                 for rectangle in range(rectangles_num + 1)]
 
     @abstractmethod
-    def get_mills_containing_pawn(self, pawn_position: Tuple[int]):
+    def check_if_pawn_in_mill(self, pawn_position: Tuple[int]):
         pass
 
     def __eq__(self: GameBoard, __o: GameBoard) -> bool:
@@ -43,19 +41,19 @@ class GameBoard:
         return self.board[rect][position]
 
     def validate_pawn_position(self, pawn_position):
-        game_board_validation.validate_pawn_position(self, pawn_position)
+        game_boards.game_board_validation.validate_pawn_position(self, pawn_position)
 
     def validate_initial_board(self, initial_board):
-        game_board_validation.validate_initial_board(self, initial_board)
+        game_boards.game_board_validation.validate_initial_board(self, initial_board)
 
     def check_center_mills(self, pawn_position: Tuple[int]):
-        return game_board_check_mills.check_center_mills(self, pawn_position)
+        return game_boards.game_board_check_mills.check_center_mills(self, pawn_position)
 
     def check_same_rect_mills(self, pawn_position: Tuple[int]):
-        return game_board_check_mills.check_same_rect_mills(self, pawn_position)
+        return game_boards.game_board_check_mills.check_same_rect_mills(self, pawn_position)
 
     def check_simple_diff_rect_mills(self, pawn_position: Tuple[int]):
-        return game_board_check_mills.check_simple_diff_rect_mills(self, pawn_position)
+        return game_boards.game_board_check_mills.check_simple_diff_rect_mills(self, pawn_position)
 
     def check_all_diff_rect_mills(self, pawn_position: Tuple[int]):
-        return game_board_check_mills.check_all_diff_rect_mills(self, pawn_position)
+        return game_boards.game_board_check_mills.check_all_diff_rect_mills(self, pawn_position)

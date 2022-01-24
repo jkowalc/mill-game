@@ -1,3 +1,4 @@
+from __future__ import annotations
 from exceptions import InvalidInitialBoardError, InvalidPawnPositionError
 
 
@@ -15,6 +16,7 @@ def validate_pawn_position(self, pawn_position):
         if not (1 <= rect <= rect_num):
             msg = f"Pawn rectangle must be between 1 and {rect_num}"
             raise InvalidPawnPositionError(msg)
+
 
 def validate_initial_board(self, initial_board):
     if not len(initial_board) == self.rectangles_num + 1:
