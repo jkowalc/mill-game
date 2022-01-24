@@ -3,7 +3,7 @@ from game_boards.game_board import GameBoard
 
 
 class SixPawnBoard(GameBoard):
-    def __init__(self, initial_board):
+    def __init__(self, initial_board=None):
         super().__init__(2, False, False, initial_board)
 
     def get_mills_containing_pawn(self, pawn_position: Tuple[int]):
