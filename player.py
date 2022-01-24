@@ -22,9 +22,21 @@ class Player:
     def get_possible_pawns_to_take(self):
         possible_pawns = []
         for pawn in self.pawns_on_board:
-            if self.board.check_if_pawn_in_mill(pawn):
+            if not self.board.check_if_pawn_in_mill(pawn):
                 possible_pawns.append(pawn)
         return possible_pawns
+
+    def get_possible_moves(self):
+        moves = {}
+        for pawn in self.pawns_on_board:
+            moves_for_pawn = []
+            if self.can_jump():
+                moves_for_pawn = self.board.get_all_empty_pawn_positions()
+            else:
+                moves_for_pawn = self.board.get_possible_moves_for_pawn(pawn)
+            if len(moves_for_pawn) > 0:
+                moves[pawn] = moves_for_pawn
+        return moves
 
     def execute_move(self, move):
         source, dest = move
@@ -36,6 +48,9 @@ class Player:
 
     def select_destination(self, possible_destinations):
         return interface.get_destination(possible_destinations, self, self.board)
+
+    def select_pawn_to_take(self, possible_pawns):
+        return interface.get_pawn_to_take(possible_pawns, self, self.board)
 
     def __eq__(self, __o: object) -> bool:
         if isinstance(__o, Player):
@@ -58,6 +73,9 @@ class ComputerPlayer(Player):
     def select_destination(self, possible_destinations):
         return super().select_destination(possible_destinations)
 
+    def select_pawn_to_take(self, possible_pawns):
+        return super().select_pawn_to_take(possible_pawns)
+
 
 class SmartComputerPlayer(ComputerPlayer):
     def select_move(self, moves: dict):
@@ -65,3 +83,6 @@ class SmartComputerPlayer(ComputerPlayer):
 
     def select_destination(self, possible_destinations):
         return super().select_destination(possible_destinations)
+
+    def select_pawn_to_take(self, possible_pawns):
+        return super().select_pawn_to_take(possible_pawns)

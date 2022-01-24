@@ -18,7 +18,7 @@ class NinePawnBoard(GameBoard):
             return True
         return False
 
-    def get_possible_moves_for_pawn_specific(self, pawn_position, player: Player):
+    def get_possible_moves_for_pawn(self, pawn_position):
         rect, pos = pawn_position
         possible_moves = [
             (rect, (pos-1) % 8)
@@ -33,3 +33,6 @@ class NinePawnBoard(GameBoard):
             if self.get_pawn_value(move) is not None:
                 possible_moves.remove(move)
         return possible_moves
+
+    def __str__(self):
+        pass
