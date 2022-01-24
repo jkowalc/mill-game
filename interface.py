@@ -5,7 +5,7 @@ def get_game_variant() -> int:
         print("Wrong value")
         return get_game_variant()
     else:
-        return {"1": 3, "2": 6, "3": 9, "4": 12}[int(inp)]
+        return {"1": 3, "2": 6, "3": 9, "4": 12}[inp]
 
 
 def get_game_mode() -> str:
