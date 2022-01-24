@@ -8,7 +8,8 @@ def main():
     mode = get_game_mode()
     if mode == 1:
         playerA = Player(get_player_name("A"), "A", pawns_num)
-        playerB = Player(get_player_name("B"), "B", pawns_num)
+        previous_name = playerA.name
+        playerB = Player(get_player_name("B", previous_name), "B", pawns_num)
     elif mode == 2:
         playerA = Player(get_player_name(), "P", pawns_num)
         playerB = ComputerPlayer("C", pawns_num)

@@ -25,8 +25,11 @@ def get_game_mode() -> str:
         return int(inp)
 
 
-def get_player_name(letter="") -> str:
+def get_player_name(letter="", previous_name=None) -> str:
     inp = input(f"\nEnter player{letter}'s name: ")
+    if inp == previous_name:
+        print("Names cannot be the same")
+        return get_player_name(letter, previous_name)
     return inp
 
 
