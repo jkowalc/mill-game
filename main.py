@@ -1,6 +1,7 @@
 from game import Game
-from interface import get_game_mode, get_game_variant, get_player_name
+from interface import get_game_mode, get_game_variant, get_player_name, print_first_player
 from player import ComputerPlayer, Player, SmartComputerPlayer
+import random
 
 
 def main():
@@ -17,6 +18,9 @@ def main():
         playerA = Player(get_player_name(), "P", pawns_num)
         playerB = SmartComputerPlayer("C", pawns_num)
     game = Game(playerA, playerB, pawns_num)
+    first_player = random.choice([playerA, playerB])
+    print_first_player(first_player)
+    game.execute_turn(first_player)
 
 
 if __name__ == "__main__":
