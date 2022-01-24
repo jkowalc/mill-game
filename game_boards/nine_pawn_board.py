@@ -22,7 +22,7 @@ class NinePawnBoard(GameBoard):
     def get_possible_moves_for_pawn(self, pawn_position):
         rect, pos = pawn_position
         possible_moves = [
-            (rect, (pos-1) % 8)
+            (rect, (pos-1) % 8),
             (rect, (pos+1) % 8)
         ]
         if pos in {1, 3, 5, 7}:
