@@ -1,3 +1,4 @@
+from copy import deepcopy
 from pawn_position_mapper import (get_alphabet_from_position_tuple,
                                   get_position_tuple_from_alphabet)
 
@@ -46,34 +47,52 @@ def get_player_move(moves: dict, player, board):
 
 
 def get_source(positions, player, board):
+    positions_alphabet = deepcopy(positions)
     for i, pawn in enumerate(positions):
-        positions[i] = get_alphabet_from_position_tuple(pawn, board)
+        positions_alphabet[i] = get_alphabet_from_position_tuple(pawn, board)
+    return get_source_loop(positions_alphabet, player, board)
+
+
+def get_source_loop(positions, player, board):
     print(positions)
     inp = input(f"{player.name} choose pawn to move: ")
     if inp not in positions:
-        return get_source(positions, player, board)
+        print("Wrong value")
+        return get_source_loop(positions, player, board)
     else:
         return get_position_tuple_from_alphabet(inp, board)
 
 
 def get_destination(positions, player, board):
+    positions_alphabet = deepcopy(positions)
     for i, pawn in enumerate(positions):
-        positions[i] = get_alphabet_from_position_tuple(pawn, board)
+        positions_alphabet[i] = get_alphabet_from_position_tuple(pawn, board)
+    return get_destination_loop(positions_alphabet, player, board)
+
+
+def get_destination_loop(positions, player, board):
     print(positions)
     inp = input(f"{player.name} choose destination: ")
     if inp not in positions:
-        return get_source(positions, player, board)
+        print("Wrong value")
+        return get_destination_loop(positions, player, board)
     else:
         return get_position_tuple_from_alphabet(inp, board)
 
 
 def get_pawn_to_take(positions, player, board):
+    positions_alphabet = deepcopy(positions)
     for i, pawn in enumerate(positions):
-        positions[i] = get_alphabet_from_position_tuple(pawn, board)
+        positions_alphabet[i] = get_alphabet_from_position_tuple(pawn, board)
+    return get_pawn_to_take_loop(positions_alphabet, player, board)
+
+
+def get_pawn_to_take_loop(positions, player, board):
     print(positions)
     inp = input(f"Choose one of {player.name}'s pawns to take out: ")
     if inp not in positions:
-        return get_source(positions, player, board)
+        print("Wrong value")
+        return get_pawn_to_take_loop(positions, player, board)
     else:
         return get_position_tuple_from_alphabet(inp, board)
 
