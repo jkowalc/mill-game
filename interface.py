@@ -71,9 +71,20 @@ def get_destination(positions, player, board):
         return get_position_tuple_from_alphabet(inp, board)
 
 
+def print_move(player: Player, move, board):
+    source, dest = move
+    source_alphabet = get_alphabet_from_position_tuple(source, board)
+    dest_alphabet = get_alphabet_from_position_tuple(dest, board)
+    print(f"{player.name} moved from {source_alphabet} to {dest_alphabet}")
+
+
 def print_winner(player):
     print(f"Player {player.name} won! ")
 
 
 def print_tie():
     print("The game is tied!")
+
+
+def print_first_player(player):
+    print(f"{player.name} is starting")
