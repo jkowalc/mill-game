@@ -12,6 +12,15 @@ class Player:
         self.pawns_num = pawns_num
         self.pawns_on_board = pawns_on_board
 
+    def can_jump(self) -> bool:
+        return self.pawns_num == 3
+
+    def has_placed_all_pawns(self) -> bool:
+        return len(self.pawns_on_board) == self.pawns_num
+
+    def select_move(self, moves: dict):
+        pass
+
     def __eq__(self, __o: object) -> bool:
         if isinstance(__o, Player):
             return self.name == __o.name
@@ -27,6 +36,10 @@ class ComputerPlayer(Player):
         name = "Computer"
         super().__init__(name, symbol, pawns_num, pawns_on_board)
 
+    def select_move(self, moves: dict):
+        pass
+
 
 class SmartComputerPlayer(ComputerPlayer):
-    pass
+    def select_move(self, moves: dict):
+        pass

@@ -1,5 +1,6 @@
 from typing import Tuple
 from game_boards.game_board import GameBoard
+from player import Player
 
 
 class SixPawnBoard(GameBoard):
@@ -14,3 +15,19 @@ class SixPawnBoard(GameBoard):
         mills = []
         mills.extend(self.check_same_rect_mills(pawn_position))
         return mills
+
+    def get_possible_moves_for_pawn_specific(self, pawn_position, player: Player):
+        rect, pos = pawn_position
+        possible_moves = [
+            (rect, (pos+1) % 8),
+            (rect, (pos-1) % 8)
+        ]
+        if pos in {1, 3, 5, 7}:
+            if rect == 1:
+                possible_moves.append((2, pos))
+            else:
+                possible_moves.append((1, pos))
+        for move in possible_moves:
+            if self.get_pawn_value(move) is not None:
+                possible_moves.remove(move)
+        return possible_moves
