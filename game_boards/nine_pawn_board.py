@@ -37,8 +37,8 @@ class NinePawnBoard(GameBoard):
         return possible_moves_copy
 
     def __str__(self):
-        board_str = "A B C D E F G\n"
-        conv_dict = get_conversion_dict_from_rectangles_num(2)
+        board_str = "\n    A   B   C   D   E   F   G\n"
+        conv_dict = get_conversion_dict_from_rectangles_num(3)
         positions = {}
         for key in conv_dict.keys():
             rect, pos = get_position_tuple_from_alphabet(key, self)
@@ -46,11 +46,17 @@ class NinePawnBoard(GameBoard):
                 positions[key] = " "
             else:
                 positions[key] = str(self.board[rect][pos])
-        board_str += f"1 {positions['a1']} - {positions['d1']} - {positions['g1']}\n"
-        board_str += f"2    {positions['b2']} - {positions['d2']} - {positions['f2']}\n"
-        board_str += f"3 {positions['c3']} - {positions['d3']}  - {positions['e3']}"
-        board_str += f"4    {positions['a4']} - {positions['b4']}  {positions['c4']}  {positions['e4']} - {positions['f4']} - {positions['g4']}\n"
-        board_str += f"5 {positions['c5']} - {positions['d5']} - {positions['e5']}\n"
-        board_str += f"6    {positions['b6']} - {positions['d6']} - {positions['f6']}\n"
-        board_str += f"7 {positions['a7']} - {positions['d7']} - {positions['g7']}\n"
+        board_str += f"1   {positions['a1']}-----------{positions['d1']}-----------{positions['g1']}\n"
+        board_str += f"    |           |           |\n"
+        board_str += f"2   |   {positions['b2']}-------{positions['d2']}-------{positions['f2']}   |\n"
+        board_str += f"    |   |       |       |   |\n"
+        board_str += f"3   |   |   {positions['c3']}---{positions['d3']}---{positions['e3']}   |   |\n"
+        board_str += f"    |   |   |       |   |   |\n"
+        board_str += f"4   {positions['a4']}---{positions['b4']}---{positions['c4']}       {positions['e4']}---{positions['f4']}---{positions['g4']}\n"
+        board_str += f"    |   |   |       |   |   |\n"
+        board_str += f"5   |   |   {positions['c5']}---{positions['d5']}---{positions['e5']}   |   |\n"
+        board_str += f"    |   |       |       |   |\n"
+        board_str += f"6   |   {positions['b6']}-------{positions['d6']}-------{positions['f6']}   |\n"
+        board_str += f"    |           |           |\n"
+        board_str += f"7   {positions['a7']}-----------{positions['d7']}-----------{positions['g7']}\n"
         return board_str

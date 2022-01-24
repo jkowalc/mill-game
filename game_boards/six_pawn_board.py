@@ -33,7 +33,7 @@ class SixPawnBoard(GameBoard):
         return possible_moves_copy
 
     def __str__(self):
-        board_str = "A B C D E\n"
+        board_str = "\n    A   B   C   D   E\n"
         conv_dict = get_conversion_dict_from_rectangles_num(2)
         positions = {}
         for key in conv_dict.keys():
@@ -42,9 +42,13 @@ class SixPawnBoard(GameBoard):
                 positions[key] = " "
             else:
                 positions[key] = str(self.board[rect][pos])
-        board_str += f"1 {positions['a1']} - {positions['c1']} - {positions['e1']}\n"
-        board_str += f"2    {positions['b2']} - {positions['c2']} - {positions['d2']}\n"
-        board_str += f"3 {positions['a3']} - {positions['b3']}    {positions['d3']} - {positions['e3']}\n"
-        board_str += f"4    {positions['b4']} - {positions['c4']} - {positions['d4']}\n"
-        board_str += f"5 {positions['a5']} - {positions['c5']} - {positions['e5']}\n"
+        board_str += f"1   {positions['a1']}-------{positions['c1']}-------{positions['e1']}\n"
+        board_str += f"    |       |       |\n"
+        board_str += f"2   |   {positions['b2']}---{positions['c2']}---{positions['d2']}   |\n"
+        board_str += f"    |   |       |   |\n"
+        board_str += f"3   {positions['a3']}---{positions['b3']}       {positions['d3']}---{positions['e3']}\n"
+        board_str += f"    |   |       |   |\n"
+        board_str += f"4   |   {positions['b4']}---{positions['c4']}---{positions['d4']}   |\n"
+        board_str += f"    |       |       |\n"
+        board_str += f"5   {positions['a5']}-------{positions['c5']}--------{positions['e5']}\n"
         return board_str

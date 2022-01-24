@@ -21,7 +21,7 @@ def get_conversion_dict_from_rectangles_num(rectangles_num) -> dict:
             "a1": (3, 0),
             "a4": (3, 7),
             "a7": (3, 6),
-            "a2": (2, 0),
+            "b2": (2, 0),
             "b4": (2, 7),
             "b6": (2, 6),
             "c3": (1, 0),
