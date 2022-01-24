@@ -1,5 +1,3 @@
-from tokenize import Name
-from turtle import position
 from pawn_position_mapper import get_alphabet_from_position_tuple, get_position_tuple_from_alphabet
 
 from player import Player
@@ -71,3 +69,11 @@ def get_destination(positions, player, board):
         return get_source(positions, player)
     else:
         return get_position_tuple_from_alphabet(inp, board)
+
+
+def print_winner(player):
+    print(f"Player {player.name} won! ")
+
+
+def print_tie():
+    print("The game is tied!")
