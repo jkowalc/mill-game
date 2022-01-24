@@ -1,7 +1,7 @@
 from typing import Tuple
 from game_boards.game_board import GameBoard
 from player import Player
-
+import pawn_position_mapper
 
 class SixPawnBoard(GameBoard):
     def __init__(self, initial_board=None):
@@ -31,4 +31,18 @@ class SixPawnBoard(GameBoard):
         return possible_moves
 
     def __str__(self):
-        return super().__str__()
+        board_str = "A B C D E\n"
+        conv_dict = pawn_position_mapper.get_conversion_dict_from_rectangles_num(2)
+        positions = {}
+        for key in conv_dict.keys():
+            rect, pos = pawn_position_mapper.get_position_tuple_from_alphabet(key)
+            if self.board[rect][pos] is None:
+                positions[key] = " "
+            else:
+                positions[key] = str(self.board[rect][pos])
+        board_str += f"1 {positions['a1']} - {positions['c1']} - {positions['e1']}\n"
+        board_str += f"2    {positions['b2']} - {positions['c2']} - {positions['d2']}\n"
+        board_str += f"3 {positions['a3']} - {positions['b3']}    {positions['d3']} - {positions['e3']}\n"
+        board_str += f"4    {positions['b4']} - {positions['c4']} - {positions['d4']}\n"
+        board_str += f"5 {positions['a5']} - {positions['c5']} - {positions['e5']}\n"
+        return board_str
