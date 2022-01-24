@@ -71,6 +71,22 @@ def get_destination(positions, player, board):
         return get_position_tuple_from_alphabet(inp, board)
 
 
+def get_pawn_to_take(positions, player, board):
+    for i, pawn in enumerate(positions):
+        positions[i] = get_alphabet_from_position_tuple(pawn)
+    positions_list = "Possible pawns: ["
+    for pos in positions:
+        positions_list += f"{pos}, "
+    positions_list = positions_list[:-1]
+    positions_list += "]"
+    print(positions_list)
+    inp = input(f"Choose one of {player.name}'s pawns to take out: ")
+    if inp not in positions:
+        return get_source(positions, player)
+    else:
+        return get_position_tuple_from_alphabet(inp, board)
+
+
 def print_move(player: Player, move, board):
     source, dest = move
     source_alphabet = get_alphabet_from_position_tuple(source, board)
