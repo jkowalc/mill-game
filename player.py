@@ -26,3 +26,7 @@ class ComputerPlayer(Player):
     def __init__(self, symbol, pawns_num=9, pawns_on_board=None):
         name = "Computer"
         super().__init__(name, symbol, pawns_num, pawns_on_board)
+
+
+class SmartComputerPlayer(ComputerPlayer):
+    pass
