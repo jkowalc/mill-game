@@ -31,7 +31,7 @@ class Game:
 
     def check_pawn_num_condition(self):
         if self.playerA.pawns_num <= 2:
-            self.announce_victory(self.playerA)
+            self.announce_victory(self.playerB)
             return True
         if self.playerB.pawns_num <= 2:
             self.announce_victory(self.playerB)
@@ -51,7 +51,7 @@ class Game:
         interface.print_tie()
 
     def check_tie_conditions(self):
-        conditions = []
+        conditions = [False]
         return False not in conditions
 
     def get_other_player(self, player):
@@ -78,6 +78,7 @@ class Game:
 
     def execute_turn_second_phase(self, player: Player):
         moves = player.get_possible_moves()
+        print(moves)
         selected = player.select_move(moves)
         self.board.execute_move(selected)
         player.execute_move(selected)

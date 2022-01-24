@@ -38,7 +38,7 @@ def get_player_name(letter="", previous_name=None) -> str:
 
 
 def get_player_move(moves: dict, player, board):
-    possible_sources = moves.keys()
+    possible_sources = list(moves.keys())
     source = get_source(possible_sources, player, board)
     possible_destinations = moves[source]
     dest = get_destination(possible_destinations, player, board)
@@ -48,12 +48,7 @@ def get_player_move(moves: dict, player, board):
 def get_source(positions, player, board):
     for i, pawn in enumerate(positions):
         positions[i] = get_alphabet_from_position_tuple(pawn, board)
-    positions_list = "Possible pawns: ["
-    for pos in positions:
-        positions_list += f"{pos}, "
-    positions_list = positions_list[:-1]
-    positions_list += "]"
-    print(positions_list)
+    print(positions)
     inp = input(f"{player.name} choose pawn to move: ")
     if inp not in positions:
         return get_source(positions, player, board)
@@ -75,12 +70,7 @@ def get_destination(positions, player, board):
 def get_pawn_to_take(positions, player, board):
     for i, pawn in enumerate(positions):
         positions[i] = get_alphabet_from_position_tuple(pawn, board)
-    positions_list = "Possible pawns: ["
-    for pos in positions:
-        positions_list += f"{pos}, "
-    positions_list = positions_list[:-1]
-    positions_list += "]"
-    print(positions_list)
+    print(positions)
     inp = input(f"Choose one of {player.name}'s pawns to take out: ")
     if inp not in positions:
         return get_source(positions, player, board)
@@ -92,16 +82,16 @@ def print_move(player, move, board):
     source, dest = move
     source_alphabet = get_alphabet_from_position_tuple(source, board)
     dest_alphabet = get_alphabet_from_position_tuple(dest, board)
-    print(f"{player.name} moved from {source_alphabet} to {dest_alphabet}")
+    print(f"\n{player.name} moved from {source_alphabet} to {dest_alphabet}")
 
 
 def print_winner(player):
-    print(f"Player {player.name} won! ")
+    print(f"\nPlayer {player.name} won! ")
 
 
 def print_tie():
-    print("The game is tied!")
+    print("\nThe game is tied!")
 
 
 def print_first_player(player):
-    print(f"{player.name} is starting")
+    print(f"\n{player.name} is starting")

@@ -33,6 +33,7 @@ class Player:
         for pawn in self.pawns_on_board:
             moves_for_pawn = []
             if self.can_jump():
+                print(self.board.board)
                 moves_for_pawn = self.board.get_all_empty_pawn_positions()
             else:
                 moves_for_pawn = self.board.get_possible_moves_for_pawn(pawn)
@@ -42,8 +43,10 @@ class Player:
 
     def execute_move(self, move):
         source, dest = move
-        self.pawns_on_board.remove(source)
-        self.pawns_on_board.append(dest)
+        if source:
+            self.pawns_on_board.remove(source)
+        if dest:
+            self.pawns_on_board.append(dest)
 
     def select_move(self, moves: dict):
         return interface.get_player_move(moves, self, self.board)

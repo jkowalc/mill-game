@@ -1,5 +1,6 @@
 from __future__ import annotations
 from abc import abstractmethod
+from re import S
 from typing import List, Tuple
 from game_boards.game_board_check_mills import (check_all_diff_rect_mills,
                                                 check_center_mills,
@@ -39,6 +40,11 @@ class GameBoard:
         self.validate_pawn_position(pawn_position)
         rect, pos = pawn_position
         self.board[rect][pos] = None
+
+    def execute_move(self, move):
+        source, dest = move
+        self.board[dest[0]][dest[1]] = self.board[source[0]][source[1]]
+        self.board[source[0]][source[1]] = None
 
     def __eq__(self: GameBoard, __o: GameBoard) -> bool:
         conditions = [type(self).__name__ == type(__o).__name__,

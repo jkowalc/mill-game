@@ -30,10 +30,11 @@ class NinePawnBoard(GameBoard):
                 possible_moves.append((rect-1, pos))
             if rect < 3:
                 possible_moves.append((rect+1, pos))
+        possible_moves_copy = possible_moves.copy()
         for move in possible_moves:
             if self.get_pawn_value(move) is not None:
-                possible_moves.remove(move)
-        return possible_moves
+                possible_moves_copy.remove(move)
+        return possible_moves_copy
 
     def __str__(self):
         board_str = "A B C D E F G\n"

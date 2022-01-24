@@ -26,10 +26,11 @@ class SixPawnBoard(GameBoard):
                 possible_moves.append((2, pos))
             else:
                 possible_moves.append((1, pos))
+        possible_moves_copy = possible_moves.copy()
         for move in possible_moves:
             if self.get_pawn_value(move) is not None:
-                possible_moves.remove(move)
-        return possible_moves
+                possible_moves_copy.remove(move)
+        return possible_moves_copy
 
     def __str__(self):
         board_str = "A B C D E\n"
