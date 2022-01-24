@@ -1,6 +1,7 @@
 from __future__ import annotations
 from exceptions import WrongPawnNumberError
 import interface
+import random
 
 
 class Player:
@@ -73,13 +74,16 @@ class ComputerPlayer(Player):
         super().__init__(name, symbol, pawns_num, pawns_on_board)
 
     def select_move(self, moves: dict):
-        pass
+        source = random.choice(list(moves.keys()))
+        possible_destinations = moves[source]
+        dest = random.choice(possible_destinations)
+        return (source, dest)
 
     def select_destination(self, possible_destinations):
-        return super().select_destination(possible_destinations)
+        return random.choice(possible_destinations)
 
     def select_pawn_to_take(self, possible_pawns):
-        return super().select_pawn_to_take(possible_pawns)
+        return random.choice(possible_pawns)
 
 
 class SmartComputerPlayer(ComputerPlayer):
@@ -87,7 +91,7 @@ class SmartComputerPlayer(ComputerPlayer):
         pass
 
     def select_destination(self, possible_destinations):
-        return super().select_destination(possible_destinations)
+        pass
 
     def select_pawn_to_take(self, possible_pawns):
-        return super().select_pawn_to_take(possible_pawns)
+        pass
