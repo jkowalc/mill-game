@@ -1,11 +1,7 @@
 from __future__ import annotations
 from abc import abstractmethod
 from typing import List, Tuple
-from game_boards.game_board_check_mills import (check_all_diff_rect_mills,
-                                                check_center_mills,
-                                                check_simple_diff_rect_mills,
-                                                check_same_rect_mills)
-from game_boards import game_board_validation
+from validation import validate_initial_board, validate_pawn_position
 
 
 class GameBoard:
@@ -18,7 +14,7 @@ class GameBoard:
         self.allow_diagonal_movement = allow_diagonal_movement
         self.allow_center_position = allow_center_position
         if initial_board:
-            self.validate_initial_board(initial_board)
+            validate_initial_board(self, initial_board)
             self.board = initial_board
         else:
             self.board = [
@@ -26,17 +22,17 @@ class GameBoard:
                 for rectangle in range(rectangles_num + 1)]
 
     def get_pawn_value(self, pawn_position):
-        self.validate_pawn_position(pawn_position)
+        validate_pawn_position(self, pawn_position)
         rect, position = pawn_position
         return self.board[rect][position]
 
     def place_pawn(self, pawn_position, player):
-        self.validate_pawn_position(pawn_position)
+        validate_pawn_position(self, pawn_position)
         rect, pos = pawn_position
         self.board[rect][pos] = player
 
     def take_out_pawn(self, pawn_position):
-        self.validate_pawn_position(pawn_position)
+        validate_pawn_position(self, pawn_position)
         rect, pos = pawn_position
         self.board[rect][pos] = None
 
@@ -71,23 +67,3 @@ class GameBoard:
     @abstractmethod
     def get_possible_moves_for_pawn(self, pawn_position):
         pass
-
-    def validate_pawn_position(self, pawn_position):
-        game_board_validation.validate_pawn_position(
-            self, pawn_position)
-
-    def validate_initial_board(self, initial_board):
-        game_board_validation.validate_initial_board(
-            self, initial_board)
-
-    def check_center_mills(self, pawn_position: Tuple[int]):
-        return check_center_mills(self, pawn_position)
-
-    def check_same_rect_mills(self, pawn_position: Tuple[int]):
-        return check_same_rect_mills(self, pawn_position)
-
-    def check_simple_diff_rect_mills(self, pawn_position: Tuple[int]):
-        return check_simple_diff_rect_mills(self, pawn_position)
-
-    def check_all_diff_rect_mills(self, pawn_position: Tuple[int]):
-        return check_all_diff_rect_mills(self, pawn_position)

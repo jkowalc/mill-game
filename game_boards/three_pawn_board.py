@@ -1,7 +1,9 @@
 from typing import Tuple
-from game_boards.game_board import GameBoard
+from game_board import GameBoard
 from pawn_position_mapper import (get_position_tuple_from_alphabet,
                                   get_conversion_dict_from_rectangles_num)
+from check_mills import check_center_mills, check_same_rect_mills
+from validation import validate_pawn_position
 
 
 class ThreePawnBoard(GameBoard):
@@ -9,14 +11,14 @@ class ThreePawnBoard(GameBoard):
         super().__init__(1, True, True, initial_board)
 
     def check_if_pawn_in_mill(self, pawn_position: Tuple[int]):
-        self.validate_pawn_position(pawn_position)
+        validate_pawn_position(self, pawn_position)
         rect, position = pawn_position
         if self.board[rect][position] is None:
             return False
-        if self.check_center_mills(pawn_position):
+        if check_center_mills(self, pawn_position):
             return True
         if pawn_position != (0, 0):
-            if self.check_same_rect_mills(pawn_position):
+            if check_same_rect_mills(self, pawn_position):
                 return True
         return False
 
