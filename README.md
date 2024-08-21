@@ -1,14 +1,20 @@
-# Projekt PIPR 21Z
+# Mill game
 
-Aby uruchomić program należy wywołać plik główny main.py
+## Running
 
-# Polecenie
-Napisać program grający w Młynek. Powinna być możliwość rozgrywki na planszy wynikającej z wybranej na początku liczby pionków (kształt planszy wynika z tej liczby, ale nie reguły gry - można próbować znaleźć taki opis planszy, żeby kod do gry był wspólny).
+Environment setup
+```bash
+poetry install
+```
 
-Powinna być możliwość gry:
+Starting the game
 
-dwóch osób ze sobą,
-osoby z komputerem,
-Program powinien kontrolować poprawność wykonywanych ruchów. Interfejs z użytkownikiem może być tekstowy.
+```bash
+make start
+```
 
-Algorytm gry przez komputer powinien mieć dwa tryby: * komputer wykonuje losowy ruch spośród dostępnych * komputer na bazie prostych reguł wybiera "najlepszy" ruch
+Running tests
+
+```bash
+make test
+```
