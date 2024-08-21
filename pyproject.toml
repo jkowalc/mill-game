@@ -1,0 +1,15 @@
+[tool.poetry]
+name = "mill-game"
+version = "0.1.0"
+description = "The mill game (or \"Nine men's morris\") written in Python"
+authors = ["Jan Kowalczewski <official.jan.kk@gmail.com>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.12"
+pytest = "^8.3.2"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"

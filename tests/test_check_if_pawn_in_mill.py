@@ -1,7 +1,7 @@
-from game_boards.six_pawn_board import SixPawnBoard
-from game_boards.nine_pawn_board import NinePawnBoard
-from game_boards.twelve_pawn_board import TwelvePawnBoard
-from player import Player
+from mill_game.game_boards.six_pawn_board import SixPawnBoard
+from mill_game.game_boards.nine_pawn_board import NinePawnBoard
+from mill_game.game_boards.twelve_pawn_board import TwelvePawnBoard
+from mill_game.player import Player
 
 
 def test_check_if_pawn_in_mill_sides():

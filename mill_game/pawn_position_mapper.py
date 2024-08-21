@@ -1,5 +1,5 @@
 from typing import Tuple
-from game_boards.game_board import GameBoard
+from mill_game.game_board import GameBoard
 
 
 def get_position_tuple_from_alphabet(pos: str, board: GameBoard) -> Tuple[int]:

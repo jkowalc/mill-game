@@ -1,5 +1,5 @@
-from player import Player
-from game_boards.three_pawn_board import ThreePawnBoard
+from mill_game.player import Player
+from mill_game.game_boards.three_pawn_board import ThreePawnBoard
 
 
 def test_get_possible_moves_for_pawn_three():

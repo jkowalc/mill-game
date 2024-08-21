@@ -1,5 +1,5 @@
-from game_boards.six_pawn_board import SixPawnBoard
-from player import Player
+from mill_game.game_boards.six_pawn_board import SixPawnBoard
+from mill_game.player import Player
 
 
 def test_get_all_empty_pawn_positions():
