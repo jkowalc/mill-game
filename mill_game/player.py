@@ -79,7 +79,7 @@ class ComputerPlayer(Player):
         source = random.choice(list(moves.keys()))
         possible_destinations = moves[source]
         dest = random.choice(possible_destinations)
-        return (source, dest)
+        return source, dest
 
     def select_destination(self, possible_destinations):
         return random.choice(possible_destinations)

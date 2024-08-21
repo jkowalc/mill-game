@@ -14,7 +14,7 @@ class GameBoard:
         self.allow_diagonal_movement = allow_diagonal_movement
         self.allow_center_position = allow_center_position
         if initial_board:
-            validate_initial_board(self, initial_board)
+            validate_initial_board(self.rectangles_num, initial_board)
             self.board = initial_board
         else:
             self.board = [
