@@ -1,6 +1,6 @@
 from typing import Tuple
 
-from game_board import GameBoard
+from mill_game.game_board import GameBoard
 
 
 def check_center_mills(board: GameBoard, pawn_position: Tuple[int]):

@@ -1,5 +1,5 @@
 from __future__ import annotations
-from exceptions import InvalidInitialBoardError, InvalidPawnPositionError
+from mill_game.exceptions import InvalidInitialBoardError, InvalidPawnPositionError
 
 
 def validate_pawn_position(board, pawn_position):

@@ -1,5 +1,5 @@
 from copy import deepcopy
-from pawn_position_mapper import (get_alphabet_from_position_tuple,
+from mill_game.pawn_position_mapper import (get_alphabet_from_position_tuple,
                                   get_position_tuple_from_alphabet)
 
 

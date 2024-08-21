@@ -1,6 +1,6 @@
 from __future__ import annotations
-from exceptions import WrongPawnNumberError
-import interface
+from mill_game.exceptions import WrongPawnNumberError
+from mill_game import interface
 import random
 
 

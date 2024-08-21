@@ -1,7 +1,7 @@
 from __future__ import annotations
 from abc import abstractmethod
 from typing import List, Tuple
-from validation import validate_initial_board, validate_pawn_position
+from mill_game.validation import validate_initial_board, validate_pawn_position
 
 
 class GameBoard:
