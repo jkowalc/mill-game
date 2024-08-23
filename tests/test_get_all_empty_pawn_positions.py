@@ -3,13 +3,13 @@ from mill_game.player import Player
 
 
 def test_get_all_empty_pawn_positions():
-    playerA = Player("Jan Kowalski", "A")
-    playerB = Player("Agnieszka Nowak", "B")
+    player_a = Player("Jan Kowalski", "A")
+    player_b = Player("Agnieszka Nowak", "B")
     initial_board = [[None],
-                     [None, playerB, playerA, playerA,
-                      playerA, None, None, None],
+                     [None, player_b, player_a, player_a,
+                      player_a, None, None, None],
                      [None, None, None, None,
-                      playerB, playerB, playerB, None]]
+                      player_b, player_b, player_b, None]]
     game_board = SixPawnBoard(initial_board)
     assert game_board.get_all_empty_pawn_positions() == [(1, 0), (1, 5),
                                                          (1, 6), (1, 7),

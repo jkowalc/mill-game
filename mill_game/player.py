@@ -5,16 +5,13 @@ import random
 
 
 class Player:
-    def __init__(self, name, symbol, pawns_num=9, pawns_on_board=None):
+    def __init__(self, name: str, symbol: str, pawns_num: int = 9, pawns_on_board: list[tuple[int, int]] = None):
         self.name = name
         self.symbol = symbol
         if pawns_num not in {3, 6, 9, 12}:
             raise WrongPawnNumberError
         self.pawns_num = pawns_num
-        if pawns_on_board:
-            self.pawns_on_board = pawns_on_board
-        else:
-            self.pawns_on_board = []
+        self.pawns_on_board: list[tuple[int, int]] = pawns_on_board if pawns_on_board else []
 
     def can_jump(self) -> bool:
         return self.pawns_num == 3
@@ -32,7 +29,6 @@ class Player:
     def get_possible_moves(self):
         moves = {}
         for pawn in self.pawns_on_board:
-            moves_for_pawn = []
             if self.can_jump():
                 moves_for_pawn = self.board.get_all_empty_pawn_positions()
             else:
@@ -41,7 +37,7 @@ class Player:
                 moves[pawn] = moves_for_pawn
         return moves
 
-    def execute_move(self, move):
+    def execute_move(self, move: tuple[tuple[int, int] | None, tuple[int, int] | None]):
         source, dest = move
         if source:
             self.pawns_on_board.remove(source)
@@ -89,7 +85,7 @@ class ComputerPlayer(Player):
 
 
 class SmartComputerPlayer(ComputerPlayer):
-    def __init__(self, symbol, pawns_num=9, pawns_on_board=None):
+    def __init__(self, symbol: str, pawns_num: int = 9, pawns_on_board: list[tuple[int, int]] = None):
         name = "Smart Computer"
         super().__init__(symbol, pawns_num, pawns_on_board, name)
 

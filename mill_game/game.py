@@ -9,71 +9,67 @@ from copy import deepcopy
 
 
 class Game:
-    def __init__(self, playerA: Player, playerB: Player, pawns_num):
-        self.playerA = playerA
-        self.playerB = playerB
+    def __init__(self, player_a: Player, player_b: Player, pawns_num: int):
+        if pawns_num == 12:
+            self.board = TwelvePawnBoard()
+        elif pawns_num == 9:
+            self.board = NinePawnBoard()
+        elif pawns_num == 6:
+            self.board = SixPawnBoard()
+        elif pawns_num == 3:
+            self.board = ThreePawnBoard()
+        self.player_a = player_a
+        self.player_b = player_b
+        self.player_a.board = self.board
+        self.player_b.board = self.board
+
         if pawns_num not in {3, 6, 9, 12}:
             raise WrongPawnNumberError
         self.pawns_num = pawns_num
         self.number_of_rounds_from_last_mill = 0
-        self.init_board()
         self.previous_boards = [deepcopy(self.board)]
 
-    def init_board(self):
-        if self.pawns_num == 12:
-            self.board = TwelvePawnBoard()
-        elif self.pawns_num == 9:
-            self.board = NinePawnBoard()
-        elif self.pawns_num == 6:
-            self.board = SixPawnBoard()
-        elif self.pawns_num == 3:
-            self.board = ThreePawnBoard()
-        self.playerA.board = self.board
-        self.playerB.board = self.board
-
-    def check_pawn_num_condition(self):
-        if self.playerA.pawns_num <= 2:
-            self.announce_victory(self.playerB)
+    def check_pawn_num_condition(self) -> bool:
+        if self.player_a.pawns_num <= 2:
+            self.announce_victory(self.player_b)
             return True
-        if self.playerB.pawns_num <= 2:
-            self.announce_victory(self.playerA)
+        if self.player_b.pawns_num <= 2:
+            self.announce_victory(self.player_a)
             return True
         return False
 
-    def check_winning_conditions(self):
-        conditions = [
-            self.check_pawn_num_condition()
-        ]
-        return False not in conditions
+    def check_winning_conditions(self) -> bool:
+        return self.check_pawn_num_condition()
 
     def save_board_config(self):
         self.previous_boards.append(deepcopy(self.board))
 
-    def check_board_config_condition(self):
+    def check_board_config_condition(self) -> bool:
         number_of_eq = 0
         for previous_board in self.previous_boards:
             if previous_board == self.board:
                 number_of_eq += 1
         return number_of_eq >= 3
 
-    def check_tie_conditions(self):
-        conditions = [
+    def check_tie_conditions(self) -> bool:
+        return all([
             self.number_of_rounds_from_last_mill >= 40,
             self.check_board_config_condition()
-        ]
-        return False not in conditions
+        ])
 
-    def announce_victory(self, player):
+    @staticmethod
+    def announce_victory(player):
         interface.print_winner(player)
 
-    def announce_tie(self):
+    @staticmethod
+    def announce_tie():
         interface.print_tie()
 
-    def get_other_player(self, player):
-        if player == self.playerA:
-            return self.playerB
-        elif player == self.playerB:
-            return self.playerA
+    def get_other_player(self, player: Player):
+        if player == self.player_a:
+            return self.player_b
+        elif player == self.player_b:
+            return self.player_a
 
     def take_out_pawn(self, player: Player):
         other_player = self.get_other_player(player)
@@ -98,7 +94,7 @@ class Game:
     def execute_turn_second_phase(self, player: Player):
         moves = player.get_possible_moves()
         if len(moves) == 0:
-            self.announce_victory(self.get_other_player())
+            self.announce_victory(self.get_other_player(player))
         selected = player.select_move(moves)
         self.board.execute_move(selected)
         player.execute_move(selected)
