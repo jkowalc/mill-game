@@ -6,8 +6,13 @@ import random
 from mill_game.game_board import GameBoard
 
 
+class PlayerSymbol:
+    A = 1
+    B = 2
+
+
 class Player:
-    def __init__(self, board: GameBoard, name: str, symbol: str, pawns_num: int = 9, pawns_on_board: list[tuple[int, int]] = None):
+    def __init__(self, board: GameBoard, name: str, symbol: PlayerSymbol, pawns_num: int = 9, pawns_on_board: list[tuple[int, int]] = None):
         self.board = board
         self.name = name
         self.symbol = symbol
@@ -69,7 +74,7 @@ class Player:
 
 
 class ComputerPlayer(Player):
-    def __init__(self, board: GameBoard, symbol, pawns_num=9, pawns_on_board=None, name=None):
+    def __init__(self, board: GameBoard, symbol: PlayerSymbol, pawns_num=9, pawns_on_board=None, name=None):
         if not name:
             name = "Computer"
         super().__init__(board, name, symbol, pawns_num, pawns_on_board)
@@ -88,7 +93,7 @@ class ComputerPlayer(Player):
 
 
 class SmartComputerPlayer(ComputerPlayer):
-    def __init__(self, board: GameBoard, symbol: str, pawns_num: int = 9, pawns_on_board: list[tuple[int, int]] = None):
+    def __init__(self, board: GameBoard, symbol: PlayerSymbol, pawns_num: int = 9, pawns_on_board: list[tuple[int, int]] = None):
         name = "Smart Computer"
         super().__init__(board, symbol, pawns_num, pawns_on_board, name)
 

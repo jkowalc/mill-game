@@ -1,19 +1,17 @@
 from mill_game.game_boards.six_pawn_board import SixPawnBoard
 from mill_game.game_boards.nine_pawn_board import NinePawnBoard
 from mill_game.game_boards.twelve_pawn_board import TwelvePawnBoard
-from mill_game.player import Player
+from mill_game.player import PlayerSymbol
 
 
 def test_check_if_pawn_in_mill_sides():
-    game_board = NinePawnBoard(initial_board)
-    player_a = Player(game_board, "Jan Kowalski", "A")
-    player_b = Player(game_board, "Agnieszka Nowak", "B")
     initial_board = [[None],
-                     [None, player_b, player_a, player_a,
-                      player_a, None, None, None],
+                     [None, PlayerSymbol.B, PlayerSymbol.A, PlayerSymbol.A,
+                      PlayerSymbol.A, None, None, None],
                      [None, None, None, None,
-                      player_b, player_b, player_b, None],
+                      PlayerSymbol.B, PlayerSymbol.B, PlayerSymbol.B, None],
                      [None, None, None, None, None, None, None, None]]
+    game_board = NinePawnBoard(initial_board)
 
     # player A
     assert game_board.check_if_pawn_in_mill((1, 2))
@@ -29,12 +27,10 @@ def test_check_if_pawn_in_mill_sides():
 
 
 def test_check_if_pawn_in_mill_sides_6_pawns():
-    player_a = Player("Jan Kowalski", "A")
-    player_b = Player("Agnieszka Nowak", "B")
     initial_board = [[None],
-                     [None, player_b, player_a, player_a,
-                      player_a, None, None, None],
-                     [None, None, None, None, player_b, player_b, player_b, None]]
+                     [None, PlayerSymbol.B, PlayerSymbol.A, PlayerSymbol.A,
+                      PlayerSymbol.A, None, None, None],
+                     [None, None, None, None, PlayerSymbol.B, PlayerSymbol.B, PlayerSymbol.B, None]]
     game_board = SixPawnBoard(initial_board)
 
     # player A
@@ -51,12 +47,10 @@ def test_check_if_pawn_in_mill_sides_6_pawns():
 
 
 def test_check_if_pawn_in_mill_diagonals_12_pawns():
-    player_a = Player("Jan Kowalski", "A")
-    player_b = Player("Agnieszka Nowak", "B")
     initial_board = [[None],
-                     [None, None, player_a, None, player_b, None, None, None],
-                     [None, None, player_a, None, player_b, None, None, None],
-                     [None, None, player_a, None, player_b, None, None, None]]
+                     [None, None, PlayerSymbol.A, None, PlayerSymbol.B, None, None, None],
+                     [None, None, PlayerSymbol.A, None, PlayerSymbol.B, None, None, None],
+                     [None, None, PlayerSymbol.A, None, PlayerSymbol.B, None, None, None]]
     game_board = TwelvePawnBoard(initial_board)
 
     assert game_board.check_if_pawn_in_mill((1, 2))
@@ -71,12 +65,10 @@ def test_check_if_pawn_in_mill_diagonals_12_pawns():
 
 
 def test_check_if_pawn_in_mill_diagonals_9_pawns():
-    player_a = Player("Jan Kowalski", "A")
-    player_b = Player("Agnieszka Nowak", "B")
     initial_board = [[None],
-                     [None, None, player_a, None, player_b, None, None, None],
-                     [None, None, player_a, None, player_b, None, None, None],
-                     [None, None, player_a, None, player_b, None, None, None]]
+                     [None, None, PlayerSymbol.A, None, PlayerSymbol.B, None, None, None],
+                     [None, None, PlayerSymbol.A, None, PlayerSymbol.B, None, None, None],
+                     [None, None, PlayerSymbol.A, None, PlayerSymbol.B, None, None, None]]
     game_board = NinePawnBoard(initial_board)
 
     assert not game_board.check_if_pawn_in_mill((1, 2))
@@ -91,12 +83,10 @@ def test_check_if_pawn_in_mill_diagonals_9_pawns():
 
 
 def test_check_if_pawn_in_mill_diff_rectangle_12_pawns():
-    player_a = Player("Jan Kowalski", "A")
-    player_b = Player("Agnieszka Nowak", "B")
     initial_board = [[None],
-                     [None, player_a, None, player_b, None, None, None, None],
-                     [None, player_a, None, player_b, None, None, None, None],
-                     [None, player_a, None, player_b, None, player_b, None, None]]
+                     [None, PlayerSymbol.A, None, PlayerSymbol.B, None, None, None, None],
+                     [None, PlayerSymbol.A, None, PlayerSymbol.B, None, None, None, None],
+                     [None, PlayerSymbol.A, None, PlayerSymbol.B, None, PlayerSymbol.B, None, None]]
     game_board = TwelvePawnBoard(initial_board)
 
     assert game_board.check_if_pawn_in_mill((1, 1))
@@ -109,12 +99,10 @@ def test_check_if_pawn_in_mill_diff_rectangle_12_pawns():
 
 
 def test_check_if_pawn_in_mill_diff_rectangle_9_pawns():
-    player_a = Player("Jan Kowalski", "A")
-    player_b = Player("Agnieszka Nowak", "B")
     initial_board = [[None],
-                     [None, player_a, None, player_b, None, None, None, None],
-                     [None, player_a, None, player_b, None, None, None, None],
-                     [None, player_a, None, player_b, None, player_b, None, None]]
+                     [None, PlayerSymbol.A, None, PlayerSymbol.B, None, None, None, None],
+                     [None, PlayerSymbol.A, None, PlayerSymbol.B, None, None, None, None],
+                     [None, PlayerSymbol.A, None, PlayerSymbol.B, None, PlayerSymbol.B, None, None]]
     game_board = NinePawnBoard(initial_board)
 
     assert game_board.check_if_pawn_in_mill((1, 1))

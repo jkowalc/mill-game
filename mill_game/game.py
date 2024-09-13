@@ -3,7 +3,7 @@ from game_boards.nine_pawn_board import NinePawnBoard
 from game_boards.six_pawn_board import SixPawnBoard
 from game_boards.three_pawn_board import ThreePawnBoard
 from game_boards.twelve_pawn_board import TwelvePawnBoard
-from player import Player, ComputerPlayer, SmartComputerPlayer
+from player import Player, ComputerPlayer, SmartComputerPlayer, PlayerSymbol
 import interface
 from interface import GameMode
 from copy import deepcopy
@@ -24,18 +24,18 @@ class Game:
         if game_mode == GameMode.PLAYER_VS_PLAYER:
             if len(player_names) != 2:
                 raise ValueError
-            self.player_a = Player(self.board, player_names[0], "A", pawns_num)
-            self.player_b = Player(self.board, player_names[1], "B", pawns_num)
+            self.player_a = Player(self.board, player_names[0], PlayerSymbol.A, pawns_num)
+            self.player_b = Player(self.board, player_names[1], PlayerSymbol.B, pawns_num)
         elif game_mode == GameMode.PLAYER_VS_COMPUTER:
             if len(player_names) != 1:
                 raise ValueError
-            self.player_a = Player(self.board, player_names[0], "P", pawns_num)
-            self.player_b = ComputerPlayer(self.board, "C", pawns_num)
+            self.player_a = Player(self.board, player_names[0], PlayerSymbol.A, pawns_num)
+            self.player_b = ComputerPlayer(self.board, PlayerSymbol.B, pawns_num)
         elif game_mode == GameMode.PLAYER_VS_SMART_COMPUTER:
             if len(player_names) != 1:
                 raise ValueError
-            self.player_a = Player(self.board, player_names[0], "P", pawns_num)
-            self.player_b = SmartComputerPlayer(self.board, "C", pawns_num)
+            self.player_a = Player(self.board, player_names[0], PlayerSymbol.A, pawns_num)
+            self.player_b = SmartComputerPlayer(self.board, PlayerSymbol.B, pawns_num)
         self.pawns_num = pawns_num
         self.number_of_rounds_from_last_mill = 0
         self.previous_boards = [deepcopy(self.board)]

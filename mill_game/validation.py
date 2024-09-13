@@ -3,7 +3,7 @@ from mill_game.exceptions import InvalidInitialBoardError, InvalidPawnPositionEr
 from typing import TYPE_CHECKING
 if TYPE_CHECKING:
     from mill_game.game_board import GameBoard
-    from mill_game.player import Player
+    from mill_game.player import PlayerSymbol
 
 
 def validate_pawn_position(board: GameBoard, pawn_position: tuple[int, int]):
@@ -19,7 +19,7 @@ def validate_pawn_position(board: GameBoard, pawn_position: tuple[int, int]):
             raise InvalidPawnPositionError(f"Pawn rectangle must be between 1 and {rect_num}")
 
 
-def validate_initial_board(rect_num: int, initial_board_repr: list[list[Player | None]]):
+def validate_initial_board(rect_num: int, initial_board_repr: list[list[PlayerSymbol | None]]):
     if not len(initial_board_repr) == rect_num + 1:
         raise InvalidInitialBoardError("Number of rectangles in board must be the same as declared")
     for i, rect in enumerate(initial_board_repr):
