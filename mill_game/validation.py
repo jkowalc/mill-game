@@ -3,7 +3,7 @@ from mill_game.exceptions import InvalidInitialBoardError, InvalidPawnPositionEr
 from typing import TYPE_CHECKING
 if TYPE_CHECKING:
     from mill_game.game_board import GameBoard
-from mill_game.player import Player
+    from mill_game.player import Player
 
 
 def validate_pawn_position(board: GameBoard, pawn_position: tuple[int, int]):

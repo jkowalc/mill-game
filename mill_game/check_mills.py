@@ -1,4 +1,7 @@
-from mill_game.game_board import GameBoard
+from __future__ import annotations
+from typing import TYPE_CHECKING
+if TYPE_CHECKING:
+    from mill_game.game_board import GameBoard
 
 
 def check_center_mills(board: GameBoard, pawn_position: tuple[int, int]):

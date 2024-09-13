@@ -3,13 +3,16 @@ from game_boards.nine_pawn_board import NinePawnBoard
 from game_boards.six_pawn_board import SixPawnBoard
 from game_boards.three_pawn_board import ThreePawnBoard
 from game_boards.twelve_pawn_board import TwelvePawnBoard
-from player import Player
+from player import Player, ComputerPlayer, SmartComputerPlayer
 import interface
+from interface import GameMode
 from copy import deepcopy
 
 
 class Game:
-    def __init__(self, player_a: Player, player_b: Player, pawns_num: int):
+    def __init__(self, game_mode: GameMode, player_names: list[str], pawns_num: int):
+        if pawns_num not in {3, 6, 9, 12}:
+            raise WrongPawnNumberError
         if pawns_num == 12:
             self.board = TwelvePawnBoard()
         elif pawns_num == 9:
@@ -18,13 +21,21 @@ class Game:
             self.board = SixPawnBoard()
         elif pawns_num == 3:
             self.board = ThreePawnBoard()
-        self.player_a = player_a
-        self.player_b = player_b
-        self.player_a.board = self.board
-        self.player_b.board = self.board
-
-        if pawns_num not in {3, 6, 9, 12}:
-            raise WrongPawnNumberError
+        if game_mode == GameMode.PLAYER_VS_PLAYER:
+            if len(player_names) != 2:
+                raise ValueError
+            self.player_a = Player(self.board, player_names[0], "A", pawns_num)
+            self.player_b = Player(self.board, player_names[1], "B", pawns_num)
+        elif game_mode == GameMode.PLAYER_VS_COMPUTER:
+            if len(player_names) != 1:
+                raise ValueError
+            self.player_a = Player(self.board, player_names[0], "P", pawns_num)
+            self.player_b = ComputerPlayer(self.board, "C", pawns_num)
+        elif game_mode == GameMode.PLAYER_VS_SMART_COMPUTER:
+            if len(player_names) != 1:
+                raise ValueError
+            self.player_a = Player(self.board, player_names[0], "P", pawns_num)
+            self.player_b = SmartComputerPlayer(self.board, "C", pawns_num)
         self.pawns_num = pawns_num
         self.number_of_rounds_from_last_mill = 0
         self.previous_boards = [deepcopy(self.board)]

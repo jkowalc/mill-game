@@ -1,7 +1,8 @@
 from __future__ import annotations
 from abc import abstractmethod
-
-from mill_game.player import Player
+from typing import TYPE_CHECKING
+if TYPE_CHECKING:
+    from mill_game.player import Player
 from mill_game.validation import validate_initial_board, validate_pawn_position
 
 

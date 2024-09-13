@@ -5,15 +5,15 @@ from mill_game.player import Player
 
 
 def test_check_if_pawn_in_mill_sides():
-    player_a = Player("Jan Kowalski", "A")
-    player_b = Player("Agnieszka Nowak", "B")
+    game_board = NinePawnBoard(initial_board)
+    player_a = Player(game_board, "Jan Kowalski", "A")
+    player_b = Player(game_board, "Agnieszka Nowak", "B")
     initial_board = [[None],
                      [None, player_b, player_a, player_a,
                       player_a, None, None, None],
                      [None, None, None, None,
                       player_b, player_b, player_b, None],
                      [None, None, None, None, None, None, None, None]]
-    game_board = NinePawnBoard(initial_board)
 
     # player A
     assert game_board.check_if_pawn_in_mill((1, 2))
