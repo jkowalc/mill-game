@@ -12,6 +12,20 @@ files = [
 ]
 
 [[package]]
+name = "colorist"
+version = "1.7.3"
+description = "Colorist for Python"
+optional = false
+python-versions = ">=3.10"
+files = [
+    {file = "colorist-1.7.3-py3-none-any.whl", hash = "sha256:90c66ddcdb147c8bc0bc2f37d3dc6bb6d8136e773af6cdb58a678c2880392530"},
+    {file = "colorist-1.7.3.tar.gz", hash = "sha256:ba1135b614ec45db6c1d5270ae1dd52ca27ab5689414cfa443a3b9b27b1e5bef"},
+]
+
+[package.extras]
+testing = ["coverage (==7.5.1)", "flake8 (==7.0.0)", "mypy (==1.10.0)", "pytest (==8.2.0)", "pytest-cov (==5.0.0)", "tox (==4.15.0)"]
+
+[[package]]
 name = "iniconfig"
 version = "2.0.0"
 description = "brain-dead simple config-ini parsing"
@@ -166,4 +180,4 @@ files = [
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.12"
-content-hash = "b9d5e372faf58acd86547bbf01df55629b78ef651b0ea48f569d764999c3f2d3"
+content-hash = "0857502188ad0b8febebac1d8874cf7504acd6b32c1d1de4f6d2a6996b908c55"

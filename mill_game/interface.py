@@ -3,6 +3,8 @@ from __future__ import annotations
 from enum import Enum
 from typing import TYPE_CHECKING
 
+from colorist import rgb
+
 if TYPE_CHECKING:
     from mill_game.game_board import GameBoard
     from mill_game.player import Player, PlayerColor
@@ -34,11 +36,9 @@ class GameMode(Enum):
 
 def get_game_mode() -> GameMode:
     inp = ""
-    while inp not in {"1", "2", "3"}:
-        print("""\nPossible game modes:
-            1. Player vs Player
-            2. Player vs Computer
-            3. Player vs Smart Computer""")
+    while inp not in {"1", "2"}:
+        print("""\nPossible game modes:\n    1. Player vs Player\n    2. Player vs Computer""")
+        rgb("    3. Player vs Smart Computer (coming soon)", 125, 125, 125)
         inp = input("Choose one: ")
     return GameMode(int(inp))
 
