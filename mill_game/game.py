@@ -3,7 +3,7 @@ from game_boards.nine_pawn_board import NinePawnBoard
 from game_boards.six_pawn_board import SixPawnBoard
 from game_boards.three_pawn_board import ThreePawnBoard
 from game_boards.twelve_pawn_board import TwelvePawnBoard
-from player import Player, ComputerPlayer, SmartComputerPlayer, PlayerSymbol
+from player import Player, ComputerPlayer, SmartComputerPlayer, PlayerColor
 import interface
 from interface import GameMode
 from copy import deepcopy
@@ -24,28 +24,28 @@ class Game:
         if game_mode == GameMode.PLAYER_VS_PLAYER:
             if len(player_names) != 2:
                 raise ValueError
-            self.player_a = Player(self.board, player_names[0], PlayerSymbol.A, pawns_num)
-            self.player_b = Player(self.board, player_names[1], PlayerSymbol.B, pawns_num)
+            self.player_white = Player(self.board, player_names[0], PlayerColor.WHITE, pawns_num)
+            self.player_black = Player(self.board, player_names[1], PlayerColor.BLACK, pawns_num)
         elif game_mode == GameMode.PLAYER_VS_COMPUTER:
             if len(player_names) != 1:
                 raise ValueError
-            self.player_a = Player(self.board, player_names[0], PlayerSymbol.A, pawns_num)
-            self.player_b = ComputerPlayer(self.board, PlayerSymbol.B, pawns_num)
+            self.player_white = Player(self.board, player_names[0], PlayerColor.WHITE, pawns_num)
+            self.player_black = ComputerPlayer(self.board, PlayerColor.BLACK, pawns_num)
         elif game_mode == GameMode.PLAYER_VS_SMART_COMPUTER:
             if len(player_names) != 1:
                 raise ValueError
-            self.player_a = Player(self.board, player_names[0], PlayerSymbol.A, pawns_num)
-            self.player_b = SmartComputerPlayer(self.board, PlayerSymbol.B, pawns_num)
+            self.player_white = Player(self.board, player_names[0], PlayerColor.WHITE, pawns_num)
+            self.player_black = SmartComputerPlayer(self.board, PlayerColor.BLACK, pawns_num)
         self.pawns_num = pawns_num
         self.number_of_rounds_from_last_mill = 0
         self.previous_boards = [deepcopy(self.board)]
 
     def check_pawn_num_condition(self) -> bool:
-        if self.player_a.pawns_num <= 2:
-            self.announce_victory(self.player_b)
+        if self.player_white.pawns_num <= 2:
+            self.announce_victory(self.player_black)
             return True
-        if self.player_b.pawns_num <= 2:
-            self.announce_victory(self.player_a)
+        if self.player_black.pawns_num <= 2:
+            self.announce_victory(self.player_white)
             return True
         return False
 
@@ -77,10 +77,10 @@ class Game:
         interface.print_tie()
 
     def get_other_player(self, player: Player):
-        if player == self.player_a:
-            return self.player_b
-        elif player == self.player_b:
-            return self.player_a
+        if player == self.player_white:
+            return self.player_black
+        elif player == self.player_black:
+            return self.player_white
 
     def take_out_pawn(self, player: Player):
         other_player = self.get_other_player(player)

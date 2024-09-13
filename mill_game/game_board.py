@@ -3,7 +3,7 @@ from abc import abstractmethod
 from enum import Enum
 from typing import TYPE_CHECKING
 if TYPE_CHECKING:
-    from mill_game.player import Player, PlayerSymbol
+    from mill_game.player import Player, PlayerColor
 from mill_game.validation import validate_initial_board, validate_pawn_position
 
 
@@ -12,19 +12,19 @@ class GameBoard:
                  rectangles_num: int,
                  allow_diagonal_movement: bool,
                  allow_center_position: bool,
-                 initial_board_repr: list[list[PlayerSymbol | None]] = None):
+                 initial_board_repr: list[list[PlayerColor | None]] = None):
         self.rectangles_num = rectangles_num
         self.allow_diagonal_movement = allow_diagonal_movement
         self.allow_center_position = allow_center_position
         if initial_board_repr:
             validate_initial_board(self.rectangles_num, initial_board_repr)
-            self.board_repr: list[list[PlayerSymbol | None]] = initial_board_repr
+            self.board_repr: list[list[PlayerColor | None]] = initial_board_repr
         else:
-            self.board_repr: list[list[PlayerSymbol | None]] = [
+            self.board_repr: list[list[PlayerColor | None]] = [
                 [None for _ in range(8)] if rectangle > 0 else [None]
                 for rectangle in range(rectangles_num + 1)]
 
-    def get_pawn_value(self, pawn_position: tuple[int, int]) -> PlayerSymbol | None:
+    def get_pawn_value(self, pawn_position: tuple[int, int]) -> PlayerColor | None:
         validate_pawn_position(self, pawn_position)
         rect, position = pawn_position
         return self.board_repr[rect][position]

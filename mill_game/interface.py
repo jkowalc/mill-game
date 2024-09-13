@@ -5,7 +5,7 @@ from typing import TYPE_CHECKING
 
 if TYPE_CHECKING:
     from mill_game.game_board import GameBoard
-    from mill_game.player import Player
+    from mill_game.player import Player, PlayerColor
 from mill_game.pawn_position_mapper import (get_alphabet_from_position_tuple,
                                             get_position_tuple_from_alphabet)
 
@@ -41,11 +41,11 @@ def get_game_mode() -> GameMode:
     return GameMode(int(inp))
 
 
-def get_player_name(letter: str = "", previous_name: str = None) -> str:
-    inp = input(f"\nEnter player{letter}'s name: ")
+def get_player_name(color: PlayerColor, previous_name: str = None) -> str:
+    inp = input(f"\nEnter {color.name.lower()} player's name: ")
     if inp == previous_name:
         print("Names cannot be the same")
-        return get_player_name(letter, previous_name)
+        return get_player_name(color, previous_name)
     return inp
 
 

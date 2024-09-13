@@ -1,4 +1,7 @@
 from __future__ import annotations
+
+from enum import Enum
+
 from mill_game.exceptions import WrongPawnNumberError
 from mill_game import interface
 import random
@@ -6,13 +9,21 @@ import random
 from mill_game.game_board import GameBoard
 
 
-class PlayerSymbol:
-    A = 1
-    B = 2
+class PlayerColor(Enum):
+    WHITE = 1
+    BLACK = 2
+
+    def __str__(self):
+        if self == PlayerColor.WHITE:
+            return '\u25CB'
+        elif self == PlayerColor.BLACK:
+            return '\u25CF'
+        else:
+            raise ValueError()
 
 
 class Player:
-    def __init__(self, board: GameBoard, name: str, symbol: PlayerSymbol, pawns_num: int = 9, pawns_on_board: list[tuple[int, int]] = None):
+    def __init__(self, board: GameBoard, name: str, symbol: PlayerColor, pawns_num: int = 9, pawns_on_board: list[tuple[int, int]] = None):
         self.board = board
         self.name = name
         self.symbol = symbol
@@ -74,7 +85,7 @@ class Player:
 
 
 class ComputerPlayer(Player):
-    def __init__(self, board: GameBoard, symbol: PlayerSymbol, pawns_num=9, pawns_on_board=None, name=None):
+    def __init__(self, board: GameBoard, symbol: PlayerColor, pawns_num=9, pawns_on_board=None, name=None):
         if not name:
             name = "Computer"
         super().__init__(board, name, symbol, pawns_num, pawns_on_board)
@@ -93,7 +104,7 @@ class ComputerPlayer(Player):
 
 
 class SmartComputerPlayer(ComputerPlayer):
-    def __init__(self, board: GameBoard, symbol: PlayerSymbol, pawns_num: int = 9, pawns_on_board: list[tuple[int, int]] = None):
+    def __init__(self, board: GameBoard, symbol: PlayerColor, pawns_num: int = 9, pawns_on_board: list[tuple[int, int]] = None):
         name = "Smart Computer"
         super().__init__(board, symbol, pawns_num, pawns_on_board, name)
 
