@@ -37,7 +37,9 @@ class GameMode(Enum):
 def get_game_mode() -> GameMode:
     inp = ""
     while inp not in {"1", "2"}:
-        print("""\nPossible game modes:\n    1. Player vs Player\n    2. Player vs Computer""")
+        print(
+            """\nPossible game modes:\n    1. Player vs Player\n    2. Player vs Computer"""
+        )
         rgb("    3. Player vs Smart Computer (coming soon)", 125, 125, 125)
         inp = input("Choose one: ")
     return GameMode(int(inp))
