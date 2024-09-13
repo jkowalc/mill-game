@@ -1,5 +1,6 @@
 from __future__ import annotations
 from typing import TYPE_CHECKING
+
 if TYPE_CHECKING:
     from mill_game.game_board import GameBoard
 
@@ -9,15 +10,17 @@ def get_position_tuple_from_alphabet(pos: str, board: GameBoard) -> tuple[int, i
     return conv_dict[pos]
 
 
-def get_alphabet_from_position_tuple(pos: tuple[int, int], board: GameBoard) -> str | None:
+def get_alphabet_from_position_tuple(pos: tuple[int, int], board: GameBoard) -> str:
     conv_dict = get_conversion_dict_from_rectangles_num(board.rectangles_num)
     for alphabet, pos_tuple in conv_dict.items():
         if pos_tuple == pos:
             return alphabet
-    return None
+    raise ValueError
 
 
-def get_conversion_dict_from_rectangles_num(rectangles_num) -> dict[str, tuple[int, int]]:
+def get_conversion_dict_from_rectangles_num(
+    rectangles_num: int,
+) -> dict[str, tuple[int, int]]:
     if rectangles_num == 3:
         return {
             "a1": (3, 0),
@@ -64,7 +67,7 @@ def get_conversion_dict_from_rectangles_num(rectangles_num) -> dict[str, tuple[i
             "d4": (1, 4),
             "e1": (2, 2),
             "e3": (2, 3),
-            "e5": (2, 4)
+            "e5": (2, 4),
         }
     elif rectangles_num == 1:
         return {
@@ -76,5 +79,7 @@ def get_conversion_dict_from_rectangles_num(rectangles_num) -> dict[str, tuple[i
             "b3": (1, 5),
             "c1": (1, 2),
             "c2": (1, 3),
-            "c3": (1, 4)
+            "c3": (1, 4),
         }
+    else:
+        raise ValueError
