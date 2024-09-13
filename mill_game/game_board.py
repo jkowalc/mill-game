@@ -1,28 +1,33 @@
 from __future__ import annotations
 from abc import abstractmethod
-from enum import Enum
 from typing import TYPE_CHECKING
+
 if TYPE_CHECKING:
     from mill_game.player import Player, PlayerColor
 from mill_game.validation import validate_initial_board, validate_pawn_position
 
 
 class GameBoard:
-    def __init__(self,
-                 rectangles_num: int,
-                 allow_diagonal_movement: bool,
-                 allow_center_position: bool,
-                 initial_board_repr: list[list[PlayerColor | None]] = None):
+    def __init__(
+        self,
+        rectangles_num: int,
+        allow_diagonal_movement: bool,
+        allow_center_position: bool,
+        initial_board_repr: list[list[PlayerColor | None]] | None = None,
+    ):
         self.rectangles_num = rectangles_num
         self.allow_diagonal_movement = allow_diagonal_movement
         self.allow_center_position = allow_center_position
+        board_repr: list[list[PlayerColor | None]]
         if initial_board_repr:
             validate_initial_board(self.rectangles_num, initial_board_repr)
-            self.board_repr: list[list[PlayerColor | None]] = initial_board_repr
+            board_repr = initial_board_repr
         else:
-            self.board_repr: list[list[PlayerColor | None]] = [
+            board_repr = [
                 [None for _ in range(8)] if rectangle > 0 else [None]
-                for rectangle in range(rectangles_num + 1)]
+                for rectangle in range(rectangles_num + 1)
+            ]
+        self.board_repr = board_repr
 
     def get_pawn_value(self, pawn_position: tuple[int, int]) -> PlayerColor | None:
         validate_pawn_position(self, pawn_position)
@@ -44,11 +49,10 @@ class GameBoard:
         self.board_repr[dest[0]][dest[1]] = self.board_repr[source[0]][source[1]]
         self.board_repr[source[0]][source[1]] = None
 
-    def __eq__(self: GameBoard, __o: GameBoard) -> bool:
-        return all([
-            type(self).__name__ == type(__o).__name__,
-            self.board_repr == __o.board_repr
-        ])
+    def __eq__(self: GameBoard, __o: object) -> bool:
+        if not isinstance(__o, GameBoard):
+            return False
+        return self.board_repr == __o.board_repr
 
     def get_all_empty_pawn_positions(self) -> list[tuple[int, int]]:
         empty_pawn_positions = []

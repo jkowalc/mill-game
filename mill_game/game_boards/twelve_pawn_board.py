@@ -1,7 +1,9 @@
 from mill_game.check_mills import check_same_rect_mills, check_all_diff_rect_mills
 from mill_game.game_board import GameBoard
-from mill_game.pawn_position_mapper import (get_position_tuple_from_alphabet,
-                                            get_conversion_dict_from_rectangles_num)
+from mill_game.pawn_position_mapper import (
+    get_position_tuple_from_alphabet,
+    get_conversion_dict_from_rectangles_num,
+)
 from mill_game.validation import validate_pawn_position
 
 
@@ -22,10 +24,7 @@ class TwelvePawnBoard(GameBoard):
 
     def get_possible_moves_for_pawn(self, pawn_position: tuple[int, int]):
         rect, pos = pawn_position
-        possible_moves = [
-            (rect, (pos + 1) % 8),
-            (rect, (pos - 1) % 8)
-        ]
+        possible_moves = [(rect, (pos + 1) % 8), (rect, (pos - 1) % 8)]
         if rect > 1:
             possible_moves.append((rect - 1, pos))
         if rect < 3:

@@ -5,12 +5,30 @@ from mill_game.player import PlayerColor
 
 
 def test_check_if_pawn_in_mill_sides():
-    initial_board = [[None],
-                     [None, PlayerColor.BLACK, PlayerColor.WHITE, PlayerColor.WHITE,
-                      PlayerColor.WHITE, None, None, None],
-                     [None, None, None, None,
-                      PlayerColor.BLACK, PlayerColor.BLACK, PlayerColor.BLACK, None],
-                     [None, None, None, None, None, None, None, None]]
+    initial_board = [
+        [None],
+        [
+            None,
+            PlayerColor.BLACK,
+            PlayerColor.WHITE,
+            PlayerColor.WHITE,
+            PlayerColor.WHITE,
+            None,
+            None,
+            None,
+        ],
+        [
+            None,
+            None,
+            None,
+            None,
+            PlayerColor.BLACK,
+            PlayerColor.BLACK,
+            PlayerColor.BLACK,
+            None,
+        ],
+        [None, None, None, None, None, None, None, None],
+    ]
     game_board = NinePawnBoard(initial_board)
 
     # player A
@@ -27,10 +45,29 @@ def test_check_if_pawn_in_mill_sides():
 
 
 def test_check_if_pawn_in_mill_sides_6_pawns():
-    initial_board = [[None],
-                     [None, PlayerColor.BLACK, PlayerColor.WHITE, PlayerColor.WHITE,
-                      PlayerColor.WHITE, None, None, None],
-                     [None, None, None, None, PlayerColor.BLACK, PlayerColor.BLACK, PlayerColor.BLACK, None]]
+    initial_board = [
+        [None],
+        [
+            None,
+            PlayerColor.BLACK,
+            PlayerColor.WHITE,
+            PlayerColor.WHITE,
+            PlayerColor.WHITE,
+            None,
+            None,
+            None,
+        ],
+        [
+            None,
+            None,
+            None,
+            None,
+            PlayerColor.BLACK,
+            PlayerColor.BLACK,
+            PlayerColor.BLACK,
+            None,
+        ],
+    ]
     game_board = SixPawnBoard(initial_board)
 
     # player A
@@ -47,10 +84,12 @@ def test_check_if_pawn_in_mill_sides_6_pawns():
 
 
 def test_check_if_pawn_in_mill_diagonals_12_pawns():
-    initial_board = [[None],
-                     [None, None, PlayerColor.WHITE, None, PlayerColor.BLACK, None, None, None],
-                     [None, None, PlayerColor.WHITE, None, PlayerColor.BLACK, None, None, None],
-                     [None, None, PlayerColor.WHITE, None, PlayerColor.BLACK, None, None, None]]
+    initial_board = [
+        [None],
+        [None, None, PlayerColor.WHITE, None, PlayerColor.BLACK, None, None, None],
+        [None, None, PlayerColor.WHITE, None, PlayerColor.BLACK, None, None, None],
+        [None, None, PlayerColor.WHITE, None, PlayerColor.BLACK, None, None, None],
+    ]
     game_board = TwelvePawnBoard(initial_board)
 
     assert game_board.check_if_pawn_in_mill((1, 2))
@@ -65,10 +104,12 @@ def test_check_if_pawn_in_mill_diagonals_12_pawns():
 
 
 def test_check_if_pawn_in_mill_diagonals_9_pawns():
-    initial_board = [[None],
-                     [None, None, PlayerColor.WHITE, None, PlayerColor.BLACK, None, None, None],
-                     [None, None, PlayerColor.WHITE, None, PlayerColor.BLACK, None, None, None],
-                     [None, None, PlayerColor.WHITE, None, PlayerColor.BLACK, None, None, None]]
+    initial_board = [
+        [None],
+        [None, None, PlayerColor.WHITE, None, PlayerColor.BLACK, None, None, None],
+        [None, None, PlayerColor.WHITE, None, PlayerColor.BLACK, None, None, None],
+        [None, None, PlayerColor.WHITE, None, PlayerColor.BLACK, None, None, None],
+    ]
     game_board = NinePawnBoard(initial_board)
 
     assert not game_board.check_if_pawn_in_mill((1, 2))
@@ -83,10 +124,21 @@ def test_check_if_pawn_in_mill_diagonals_9_pawns():
 
 
 def test_check_if_pawn_in_mill_diff_rectangle_12_pawns():
-    initial_board = [[None],
-                     [None, PlayerColor.WHITE, None, PlayerColor.BLACK, None, None, None, None],
-                     [None, PlayerColor.WHITE, None, PlayerColor.BLACK, None, None, None, None],
-                     [None, PlayerColor.WHITE, None, PlayerColor.BLACK, None, PlayerColor.BLACK, None, None]]
+    initial_board = [
+        [None],
+        [None, PlayerColor.WHITE, None, PlayerColor.BLACK, None, None, None, None],
+        [None, PlayerColor.WHITE, None, PlayerColor.BLACK, None, None, None, None],
+        [
+            None,
+            PlayerColor.WHITE,
+            None,
+            PlayerColor.BLACK,
+            None,
+            PlayerColor.BLACK,
+            None,
+            None,
+        ],
+    ]
     game_board = TwelvePawnBoard(initial_board)
 
     assert game_board.check_if_pawn_in_mill((1, 1))
@@ -99,10 +151,21 @@ def test_check_if_pawn_in_mill_diff_rectangle_12_pawns():
 
 
 def test_check_if_pawn_in_mill_diff_rectangle_9_pawns():
-    initial_board = [[None],
-                     [None, PlayerColor.WHITE, None, PlayerColor.BLACK, None, None, None, None],
-                     [None, PlayerColor.WHITE, None, PlayerColor.BLACK, None, None, None, None],
-                     [None, PlayerColor.WHITE, None, PlayerColor.BLACK, None, PlayerColor.BLACK, None, None]]
+    initial_board = [
+        [None],
+        [None, PlayerColor.WHITE, None, PlayerColor.BLACK, None, None, None, None],
+        [None, PlayerColor.WHITE, None, PlayerColor.BLACK, None, None, None, None],
+        [
+            None,
+            PlayerColor.WHITE,
+            None,
+            PlayerColor.BLACK,
+            None,
+            PlayerColor.BLACK,
+            None,
+            None,
+        ],
+    ]
     game_board = NinePawnBoard(initial_board)
 
     assert game_board.check_if_pawn_in_mill((1, 1))

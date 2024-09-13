@@ -1,11 +1,12 @@
-from exceptions import WrongPawnNumberError
-from game_boards.nine_pawn_board import NinePawnBoard
-from game_boards.six_pawn_board import SixPawnBoard
-from game_boards.three_pawn_board import ThreePawnBoard
-from game_boards.twelve_pawn_board import TwelvePawnBoard
-from player import Player, ComputerPlayer, SmartComputerPlayer, PlayerColor
-import interface
-from interface import GameMode
+from mill_game.exceptions import WrongPawnNumberError
+from mill_game.game_board import GameBoard
+from mill_game.game_boards.nine_pawn_board import NinePawnBoard
+from mill_game.game_boards.six_pawn_board import SixPawnBoard
+from mill_game.game_boards.three_pawn_board import ThreePawnBoard
+from mill_game.game_boards.twelve_pawn_board import TwelvePawnBoard
+from mill_game.player import Player, ComputerPlayer, SmartComputerPlayer, PlayerColor
+import mill_game.interface as interface
+from mill_game.interface import GameMode
 from copy import deepcopy
 
 
@@ -13,29 +14,43 @@ class Game:
     def __init__(self, game_mode: GameMode, player_names: list[str], pawns_num: int):
         if pawns_num not in {3, 6, 9, 12}:
             raise WrongPawnNumberError
+        board: GameBoard
         if pawns_num == 12:
-            self.board = TwelvePawnBoard()
+            board = TwelvePawnBoard()
         elif pawns_num == 9:
-            self.board = NinePawnBoard()
+            board = NinePawnBoard()
         elif pawns_num == 6:
-            self.board = SixPawnBoard()
+            board = SixPawnBoard()
         elif pawns_num == 3:
-            self.board = ThreePawnBoard()
+            board = ThreePawnBoard()
+        else:
+            raise ValueError
+        self.board = board
         if game_mode == GameMode.PLAYER_VS_PLAYER:
             if len(player_names) != 2:
                 raise ValueError
-            self.player_white = Player(self.board, player_names[0], PlayerColor.WHITE, pawns_num)
-            self.player_black = Player(self.board, player_names[1], PlayerColor.BLACK, pawns_num)
+            self.player_white = Player(
+                self.board, player_names[0], PlayerColor.WHITE, pawns_num
+            )
+            self.player_black = Player(
+                self.board, player_names[1], PlayerColor.BLACK, pawns_num
+            )
         elif game_mode == GameMode.PLAYER_VS_COMPUTER:
             if len(player_names) != 1:
                 raise ValueError
-            self.player_white = Player(self.board, player_names[0], PlayerColor.WHITE, pawns_num)
+            self.player_white = Player(
+                self.board, player_names[0], PlayerColor.WHITE, pawns_num
+            )
             self.player_black = ComputerPlayer(self.board, PlayerColor.BLACK, pawns_num)
         elif game_mode == GameMode.PLAYER_VS_SMART_COMPUTER:
             if len(player_names) != 1:
                 raise ValueError
-            self.player_white = Player(self.board, player_names[0], PlayerColor.WHITE, pawns_num)
-            self.player_black = SmartComputerPlayer(self.board, PlayerColor.BLACK, pawns_num)
+            self.player_white = Player(
+                self.board, player_names[0], PlayerColor.WHITE, pawns_num
+            )
+            self.player_black = SmartComputerPlayer(
+                self.board, PlayerColor.BLACK, pawns_num
+            )
         self.pawns_num = pawns_num
         self.number_of_rounds_from_last_mill = 0
         self.previous_boards = [deepcopy(self.board)]
@@ -63,10 +78,12 @@ class Game:
         return number_of_eq >= 3
 
     def check_tie_conditions(self) -> bool:
-        return all([
-            self.number_of_rounds_from_last_mill >= 40,
-            self.check_board_config_condition()
-        ])
+        return all(
+            [
+                self.number_of_rounds_from_last_mill >= 40,
+                self.check_board_config_condition(),
+            ]
+        )
 
     @staticmethod
     def announce_victory(player):
@@ -122,6 +139,5 @@ class Game:
         else:
             self.execute_turn_first_phase(player)
         self.save_board_config()
-        if not (self.check_winning_conditions() or
-                self.check_tie_conditions()):
+        if not (self.check_winning_conditions() or self.check_tie_conditions()):
             self.execute_turn(self.get_other_player(player))

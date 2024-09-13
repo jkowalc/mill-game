@@ -1,6 +1,11 @@
-from game import Game
-from interface import (get_game_mode, get_game_variant,
-                       get_player_name, print_first_player, GameMode)
+from mill_game.game import Game
+from mill_game.interface import (
+    get_game_mode,
+    get_game_variant,
+    get_player_name,
+    print_first_player,
+    GameMode,
+)
 import random
 
 from mill_game.player import PlayerColor
