@@ -63,8 +63,8 @@ def get_player_move(
     return source, dest
 
 
-def get_source(
-    positions: list[tuple[int, int]], player: Player, board: GameBoard
+def get_position_choice(
+    positions: list[tuple[int, int]], board: GameBoard, message: str
 ) -> tuple[int, int]:
     positions_readable = [
         get_alphabet_from_position_tuple(pos, board) for pos in positions
@@ -72,47 +72,32 @@ def get_source(
     print(positions_readable)
     choice = None
     while choice is None:
-        inp = input(f"{player.name} choose pawn to move: ")
+        inp = input(message)
         if inp in positions_readable:
             choice = get_position_tuple_from_alphabet(inp, board)
         else:
             print("Wrong value")
     return choice
+
+
+def get_source(
+    positions: list[tuple[int, int]], player: Player, board: GameBoard
+) -> tuple[int, int]:
+    return get_position_choice(positions, board, f"{player.name} choose pawn to move: ")
 
 
 def get_destination(
     positions: list[tuple[int, int]], player: Player, board: GameBoard
 ) -> tuple[int, int]:
-    positions_readable = [
-        get_alphabet_from_position_tuple(pos, board) for pos in positions
-    ]
-    print(positions_readable)
-    choice = None
-    while choice is None:
-        inp = input(f"{player.name} choose destination: ")
-        if inp in positions_readable:
-            choice = get_position_tuple_from_alphabet(inp, board)
-        else:
-            print("Wrong value")
-    return choice
+    return get_position_choice(positions, board, f"{player.name} choose destination: ")
 
 
 def get_pawn_to_take(
     positions: list[tuple[int, int]], player: Player, board: GameBoard
 ) -> tuple[int, int]:
-    positions_readable = [
-        get_alphabet_from_position_tuple(pos, board) for pos in positions
-    ]
-    print(positions_readable)
-    inp = None
-    choice = None
-    while choice is None:
-        inp = input(f"Choose one of {player.name}'s pawns to take out: ")
-        if inp in positions_readable:
-            choice = get_position_tuple_from_alphabet(inp, board)
-        else:
-            print("Wrong value")
-    return choice
+    return get_position_choice(
+        positions, board, f"Choose one of {player.name}'s pawns to take out: "
+    )
 
 
 def print_move(
